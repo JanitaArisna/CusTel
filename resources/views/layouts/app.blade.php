@@ -15,28 +15,9 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-
-<body class="font-sans antialiased bg-gray-100">
-
-       <!-- Content Area -->
-        <div class="flex-1 p-6">
-            @include('layouts.navigation') <!-- Include navbar here -->
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow mb-6">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-
+<body>
+    @include('layouts.nav')
+    @include('layouts.sidebar')
 </body>
 
 </html>

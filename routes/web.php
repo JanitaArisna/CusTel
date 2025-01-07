@@ -5,10 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DatinController;
 use App\Http\Controllers\NonDatinController;
 use App\Http\Controllers\AccountManagerController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return redirect()->route('login'); // Redirect ke halaman login
 });
+
+Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index']); // Setelah logout,  akan otomatis diarahkan kembali ke halaman login
 
 
 Route::get('/dashboard', function () {
