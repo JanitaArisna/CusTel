@@ -1,0 +1,144 @@
+<!-- resources/views/datin/datin.blade.php -->
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __("Datin Page") }}
+        </h2>
+    </x-slot>
+
+    <div class="py-5">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-10">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <!-- Judul Besar dan Bold -->
+                    <h1 class="font-bold mb-3" style="font-size: 2rem">
+                        REVENUE DATIN
+                    </h1>
+
+                    <!-- Tombol Search dan All untuk Filter -->
+                    <div class="mb-4">
+                        <div class="form-container">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                name="search"
+                                class="input-search"
+                            />
+                            <button class="btn-search">Search</button>
+                            <select class="select-filter">
+                                <option value="all">All</option>
+                                <option value="option1">Date</option>
+                                <option value="option2">Month</option>
+                                <option value="option3">New Cust</option>
+                            </select>
+                            <button class="btn-input">Input Data Baru</button>
+                        </div>
+                    </div>
+
+                    <!-- Tabel -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full table-auto">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 border">Acc Num</th>
+                                    <th class="px-4 py-2 border">Cust Name</th>
+                                    <th class="px-4 py-2 border">NIPNAS</th>
+                                    <th class="px-4 py-2 border">Segment</th>
+                                    <th class="px-4 py-2 border">Witel</th>
+                                    <th class="px-4 py-2 border">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2 border">12345</td>
+                                    <td class="px-4 py-2 border">John Doe</td>
+                                    <td class="px-4 py-2 border">98765</td>
+                                    <td class="px-4 py-2 border">Retail</td>
+                                    <td class="px-4 py-2 border">Jakarta</td>
+                                    <td class="px-4 py-2 border">
+                                        <button
+                                            class="bg-green-500 text-white px-4 py-2 rounded-md"
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">67890</td>
+                                    <td class="px-4 py-2 border">Jane Smith</td>
+                                    <td class="px-4 py-2 border">12345</td>
+                                    <td class="px-4 py-2 border">Corporate</td>
+                                    <td class="px-4 py-2 border">Surabaya</td>
+                                    <td class="px-4 py-2 border">
+                                        <button
+                                            class="bg-green-500 text-white px-4 py-2 rounded-md"
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Wrapper for the form container */
+        .form-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* For spacing between elements */
+        }
+
+        /* Styling for input search */
+        .input-search {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+
+        /* Styling for buttons */
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Search button styling */
+        .btn-search {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-search:hover {
+            background-color: #0056b3;
+        }
+
+        /* Input data baru button styling */
+        .btn-input {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        .btn-input:hover {
+            background-color: #218838;
+        }
+
+        /* Styling for select filter */
+        .select-filter {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</x-app-layout>

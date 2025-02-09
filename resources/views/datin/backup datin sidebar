@@ -1,0 +1,116 @@
+<div style="display: flex; height: 100vh;">
+    <!-- Sidebar -->
+    <div style="width: 250px; background-color: #D9D9D9; color: white; padding: 20px; display: flex; flex-direction: column; justify-content: flex-start; position: relative;">
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+            <!-- Dashboard -->
+            <li style="margin-bottom: 10px;">
+                <a 
+                href="{{ route('dashboard') }}" 
+                :class="{'bg-gray-200': request()->routeIs('dashboard')}" 
+                style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; text-align: center;">
+                {{ __('Dashboard') }}
+                </a>
+            </li>
+            
+            <!-- Datin (Collapsible) -->
+            <li style="margin-bottom: 10px; list-style-type: none;">
+                <a 
+                href="javascript:void(0)" 
+                onclick="toggleSubMenu('datin-submenu')" 
+                style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; position: relative; text-align: center;">
+                    {{ __('Datin') }} 
+                    <span style="position: absolute; right: 15px; transition: transform 0.3s;">&gt;</span>
+                </a>
+                <!-- Submenu Datin -->
+                <ul id="datin-submenu" style="display: none; list-style-type: none; padding-left: 20px; margin-top: 10px;">
+                    <li style="margin-bottom: 10px;">
+                        <a 
+                        href="{{ route('datin') }}" 
+                        :class="{'bg-gray-200': request()->routeIs('datin')}" 
+                        style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; text-align: center;">
+                        {{ __('Datin Data') }}
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a 
+                        href="{{ route('assets') }}" 
+                        :class="{'bg-gray-200': request()->routeIs('assets')}" 
+                        style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; text-align: center;">
+                        {{ __('Assets') }}
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a 
+                        href="{{ route('bill') }}" 
+                        :class="{'bg-gray-200': request()->routeIs('bill')}" 
+                        style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; text-align: center;">
+                        {{ __('Bill') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Non-Datin -->
+            <li style="margin-bottom: 10px;">
+                <a 
+                href="{{ route('non-datin') }}" 
+                :class="{'bg-gray-200': request()->routeIs('non-datin')}" 
+                style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; text-align: center;">
+                {{ __('Non-Datin') }}
+                </a>
+            </li>
+
+            <!-- Account Manager -->
+            <li style="margin-bottom: 10px;">
+                <a 
+                href="{{ route('account-manager') }}" 
+                :class="{'bg-gray-200': request()->routeIs('account-manager')}" 
+                style="display: block; padding: 15px; background-color: #FFFFFF; color: black; text-decoration: none; border-radius: 10px; text-align: center;">
+                {{ __('Account Manager') }}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div style="flex-grow: 1; padding: 20px;">
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
+</div>
+
+<!-- JavaScript to handle the collapsible submenu -->
+<script>
+    // Variabel untuk menyimpan status submenu yang terbuka
+    let openSubMenu = null;
+
+    function toggleSubMenu(menuId) {
+        const submenu = document.getElementById(menuId);
+        const arrow = submenu.previousElementSibling.querySelector('span');
+        const isVisible = submenu.style.display === 'block';
+
+        // Jika submenu yang diklik adalah submenu yang sedang terbuka, tutup
+        if (isVisible) {
+            submenu.style.display = 'none';
+            arrow.innerHTML = '&gt;';
+            arrow.style.transform = 'rotate(0deg)';
+            openSubMenu = null;
+        } else {
+            // Menutup submenu lainnya jika ada yang terbuka
+            if (openSubMenu !== null && openSubMenu !== menuId) {
+                document.getElementById(openSubMenu).style.display = 'none';
+                document.querySelector(`#${openSubMenu}`).previousElementSibling.querySelector('span').innerHTML = '&gt;';
+                document.querySelector(`#${openSubMenu}`).previousElementSibling.querySelector('span').style.transform = 'rotate(0deg)';
+            }
+
+            // Menampilkan submenu yang diklik
+            submenu.style.display = 'block';
+            arrow.innerHTML = '&lt;';
+            arrow.style.transform = 'rotate(-90deg)';
+
+            // Menyimpan submenu yang terbuka
+            openSubMenu = menuId;
+        }
+    }
+</script>

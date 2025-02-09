@@ -1,4 +1,4 @@
-<div style="display: flex; height: 100vh;">
+<div style="height: 100vh;">
     <!-- Sidebar -->
     <div style="width: 250px; background-color: #D9D9D9; color: white; padding: 20px; display: flex; flex-direction: column; justify-content: flex-start;">
         <ul style="list-style-type: none; padding: 0;">
@@ -35,9 +35,9 @@
             </li>
         </ul>
     </div>
-<div>
-    <main>
-            {{ $slot }}
-        </main>
-</div>
+
+<main>
+    {{ $slot }}
+</main>
+
 </div>
