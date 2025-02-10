@@ -118,11 +118,37 @@ class AssetsDatinController extends Controller
      */
     public function destroy(string $id)
     {
+        // Mengecek apakah user sudah login dan memiliki role 'admin'
         if (!Auth::check() || Auth::user()->role !== 'admin') {
+            // Jika user belum login atau bukan admin, arahkan ke halaman '/datin'
             return redirect('/datin');
-        }else{
-            Assets::where('sid', $id)->delete();
-            return redirect()->route('datin.assets.index')->with('success', 'Data berhasil dihapus');
+        } else {
+            // Mengambil data asset berdasarkan 'sid' (id yang diberikan)
+            $data = Assets::where('sid', $id)->first();
+            
+            // Jika asset ditemukan, hapus data tersebut
+            if ($data) {
+                $acc_num = $data->acc_num; // Ambil nilai acc_num dari asset yang ditemukan
+                $data->delete(); // Hapus data asset
+                
+                // Setelah berhasil menghapus, arahkan ke URL dengan acc_num yang sesuai
+                // Gunakan URL generator, bukan query string
+                return redirect("/datin/{$acc_num}/assets")
+                                ->with('success', 'Data berhasil dihapus');
+            } else {
+                // Jika data asset tidak ditemukan
+                return redirect('/datin')->with('error', 'Data tidak ditemukan');
+            }
         }
     }
+
+
+public function index($acc_num)
+{
+    // Ambil semua data asset dengan acc_num tertentu
+    $assets = Assets::where('acc_num', $acc_num)->get();
+    return view('assets.index', compact('assets', 'acc_num'));
+}
+
+
 }

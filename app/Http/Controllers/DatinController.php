@@ -126,7 +126,12 @@ public function index(Request $request)
             'am_nm' => $request->am_nm,
         ];
         datin::create($data);
-        return redirect()->to('datin')->with('success', 'Berhasil menambahkan data dari Account Number: ' . $request->acc_num);
+        $cust_nm = $data['cust_nm'];
+        $acc_num = $data['acc_num'];
+        return redirect()->to('datin')->with([
+            'success_add'=> true, 
+            'cust_nm' => $cust_nm,
+            'acc_num' => $acc_num]);
     }
 
     /**
@@ -195,7 +200,12 @@ public function index(Request $request)
         ];
         datin::where('sid', $id)->update($data);
         $cust_nm = $data['cust_nm'];
-        return redirect()->to('datin')->with('success', 'Berhasil mengubah data dari SID: ' . $id . ' Dengan Customer Name: ' . $cust_nm);
+        $acc_num = $data['acc_num'];
+        return redirect()->to('datin')->with([
+            'success_update'=> true, 
+            'cust_nm' => $cust_nm,
+            'acc_num' => $acc_num,
+            'sid' => $id]);
     }
 
     /**

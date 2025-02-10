@@ -83,7 +83,8 @@
                     }
                 });
             }
-          </script>
+          </script>-->
+
           <!-- AKHIR DATA -->
 @endsection
 </x-app-layout>

@@ -29,7 +29,9 @@
                             <th class="col-md-1">Start</th>
                             <th class="col-md-1">End</th>
                             <th class="col-md-1">AM</th>
+                            @if(auth()->user()->role == 'admin')
                             <th class="col-md-1">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -47,8 +49,8 @@
                             <td>{{ $item->start }}</td>
                             <td>{{ $item->end }}</td>
                             <td>{{ $item->am_nm }}</td>
-                            <td>
                             @if(auth()->user()->role == 'admin')
+                            <td>
                                 <a href="{{ route('assets.edit', $item->sid) }}" class="btn btn-outline-warning btn-sm">Edit</a>
                                 <form id="delete-form-{{ $item->sid }}" action="{{ route('assets.destroy', $item->sid) }}" method="POST" style="display: inline;">
                                     @csrf
@@ -62,13 +64,7 @@
                 </table>
                <button type="button" class="btn btn-primary" onclick="window.location.href = '/datin'">Back</button>
           </div>
-            <script>
-                function confirmDelete(sid) {
-                    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                        document.getElementById('delete-form-' + sid).submit();
-                    }
-                }
-            </script>
+          @include('komponen.pesan')
           <!-- AKHIR DATA -->
 @endsection
 </x-app-layout>

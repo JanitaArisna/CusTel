@@ -1,6 +1,8 @@
 @extends('layouts.template')
 
 @section('konten')
+    
+
 
     <!-- Konten form untuk tambah data -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -95,25 +97,6 @@
 
         </form>
     </div>
-    <script>
-        document.querySelector('#updateForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Mencegah submit form langsung
-
-            Swal.fire({
-                title: 'Yakin ingin update?',
-                text: 'Data akan diupdate dan perubahan tidak dapat dibatalkan.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Update!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.submit(); // Submit form jika user menekan tombol konfirmasi
-                }
-            });
-        });
-    </script>
+    @include('komponen.pesan')
 
 @endsection

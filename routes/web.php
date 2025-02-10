@@ -71,6 +71,8 @@ Route::prefix('datin/{acc_num}')->group(function () {
 });
 
 Route::get('/assets/{sid}/edit', [AssetsDatinController::class, 'edit'])->name('assets.edit');
+Route::get('/datin/{acc_num}/assets', [AssetsDatinController::class, 'index'])->name('datin.assets.index');
+
 
 
 Route::get('datin/{acc_num}/assets', [AssetsDatinController::class, 'showAssets']);
