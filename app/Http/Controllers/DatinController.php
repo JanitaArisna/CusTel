@@ -38,6 +38,7 @@ public function index(Request $request)
         ->orderBy('acc_num', 'desc')
         ->paginate($jumlahbaris);
     }
+    
 
     $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
     return view('datin.datin', compact('data', 'assetsData'));
@@ -145,15 +146,24 @@ public function index(Request $request)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $acc_num, string $sid)
     {
-
         if (!Auth::check() || Auth::user()->role !== 'admin') {
-            return redirect('/datin');
+        return redirect('/datin');
         }
-        $data = datin::where('sid', $id)->first();
-        return view('datin.edit')->with('data', $data);
-    }   
+
+        // Pastikan query sesuai dengan struktur database
+        $data = datin::where('sid', $sid)->first();
+        
+
+        if (!$data) {
+            return redirect('/datin')->with('error', 'Data tidak ditemukan');
+        }
+
+        return view('datin.edit', compact('data', 'acc_num'));
+    }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -217,4 +227,8 @@ public function index(Request $request)
         return redirect()->to('datin')->with('success', 'Berhasil menghapus data');
     }
     
+    
+
 }
+
+

@@ -1,5 +1,7 @@
 <!-- resources/views/account-manager/account-manager.blade.php -->
 <x-app-layout>
+    @extends('layouts.template')
+    
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Account Manager Page') }}

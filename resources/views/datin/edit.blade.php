@@ -1,3 +1,4 @@
+<!-- x-app-layout -->
 @extends('layouts.template')
 
 @section('konten')
@@ -6,9 +7,9 @@
 
     <!-- Konten form untuk tambah data -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h3 class="mb-1">UPDATE DATA PELANGGA</h3>
+        <h3 class="mb-1">UPDATE DATA PELANGGAN</h3>
         @if(isset($data) && $data->sid)
-            <p class="text-xs text-gray-400 mb-4">SID Pelanggan: {{ $data->sid }}</h2>
+            <p class="text-xs text-gray-400 mb-4">SID Pelanggan: {{ $data->sid }}</p>
         @endif
         <form id="updateForm" action='{{ url ('datin/'.$data->sid) }}' method='post'>
             @csrf
@@ -100,3 +101,4 @@
     @include('komponen.pesan')
 
 @endsection
+<!-- /x-app-layout -->

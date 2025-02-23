@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('datin_bill', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('acc_num');
+            $table->integer('sid');
             $table->decimal('januari', 10, 2)->nullable();
             $table->decimal('februari', 10, 2)->nullable();
             $table->decimal('maret', 10, 2)->nullable();
@@ -26,8 +26,15 @@ return new class extends Migration
             $table->decimal('oktober', 10, 2)->nullable();
             $table->decimal('november', 10, 2)->nullable();
             $table->decimal('desember', 10, 2)->nullable();
+            $table->year('tahun'); // Menggunakan tipe data year untuk tahun
             $table->timestamps();
 
+            // Menambahkan constraint unik untuk kombinasi sid + tahun
+            $table->unique(['sid', 'tahun']);
+
+            // Menambahkan foreign key
+            $table->foreign('sid')->references('sid')->on('datin')->onDelete('cascade');
+            
         });
     }
 

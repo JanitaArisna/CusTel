@@ -1,31 +1,60 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.template')
 
-    @if (auth()->user()->role === 'admin')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ auth()->user()->name }} {{ __("You're logged in!") }}
+@if (in_array(auth()->user()->role, ['admin', 'manager']))
+    <div id="alert-box" class="alert alert-primary alert-dismissible fade show mx-auto mt-4" role="alert" style="max-width: 1000px;">
+        <strong>Halo, {{ auth()->user()->name }}!</strong> You're logged in.
+        <button type="button" class="btn-close" id="close-alert" aria-label="Close"></button>
+    </div>
+@endif
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (sessionStorage.getItem("alertClosed")) {
+            document.getElementById("alert-box").style.display = "none";
+        }
+
+        document.getElementById("close-alert").addEventListener("click", function () {
+            document.getElementById("alert-box").style.display = "none";
+            sessionStorage.setItem("alertClosed", "true");
+        });
+    });
+</script>
+
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Card JUMLAH DATIN -->
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">PELANGGAN DATIN</div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $jumlah_datin }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card JUMLAH NON-DATIN -->
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">PELANGGAN NON-DATIN</div>
+                    <div class="card-body">
+                        <h2 class="card-title">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card JUMLAH SELURUHNYA -->
+            <div class="col-md-4">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">TOTAL PELANGGAN </div>
+                    <div class="card-body">
+                        <h2 class="card-title">0</h2>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @endif
 
-    @if (auth()->user()->role === 'manager')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ auth()->user()->name }} {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
 </x-app-layout>

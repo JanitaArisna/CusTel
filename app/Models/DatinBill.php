@@ -10,11 +10,11 @@ class DatinBill extends Model
 
     public function datin()
     {
-        return $this->belongsTo(Datin::class, 'acc_num', 'acc_num');
+        return $this->belongsTo(Datin::class, 'sid', 'sid');
     }
 
     protected $fillable = [
-        'acc_num',
+        'sid',
         'januari',
         'februari',
         'maret',

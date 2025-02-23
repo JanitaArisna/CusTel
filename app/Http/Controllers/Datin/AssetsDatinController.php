@@ -67,7 +67,7 @@ class AssetsDatinController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    /**public function update(Request $request, string $id)
     {
         $request->validate([
             'acc_num' => 'required',
@@ -111,7 +111,7 @@ class AssetsDatinController extends Controller
         Assets::where('sid', $id)->update($data);
         return redirect()->route('datin')->with('success', 'Data berhasil diupdate');
 
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -143,12 +143,12 @@ class AssetsDatinController extends Controller
     }
 
 
-public function index($acc_num)
-{
-    // Ambil semua data asset dengan acc_num tertentu
-    $assets = Assets::where('acc_num', $acc_num)->get();
-    return view('assets.index', compact('assets', 'acc_num'));
-}
+    public function index($acc_num)
+   {
+        // Ambil semua data asset dengan acc_num tertentu
+       $assets = Assets::where('acc_num', $acc_num)->get();
+       return view('assets.index', compact('assets', 'acc_num'));
+    }
 
 
 }
