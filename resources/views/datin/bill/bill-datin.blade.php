@@ -24,9 +24,10 @@
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
         <h3 class="mb-1">TAMPILAN BILL</h3>
-        <h2 class="text-xs text-gray-400 mb-4">SID: {{ $sid }}</h2>
-
-        <a href="{{ route('bill.create', $sid) }}" class="btn btn-success">+ Tambah Bill</a>
+        <h2 class="text-xs text-gray-400 mb-4">SID: {{ $sid }}</h2>  
+        @if(auth()->user()->role == 'admin')
+            <a href="{{ route('bill.create', $sid) }}" class="btn btn-success">+ Tambah Bill</a><br><br>
+        @endif
 
         <div style="overflow-x: auto;">
             <table class="table table-striped table-bordered table-hover">
@@ -46,7 +47,9 @@
                         <th class="col-md-*">Nov</th>
                         <th class="col-md-*">Des</th>
                         <th class="col-md-*">Tahun</th>
-                        <th class="col-md-*">Aksi</th>
+                        @if(auth()->user()->role == 'admin')
+                            <th class="col-md-*">Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -66,6 +69,7 @@
                         <td>@rupiah($item->november)</td>
                         <td>@rupiah($item->desember)</td>
                         <td>{{ $item->tahun }}</td>
+                        @if(auth()->user()->role == 'admin')
                         <td>
                             @php
                                 $bill = $data->first();
@@ -77,6 +81,7 @@
                                 <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</button>
                             </form>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

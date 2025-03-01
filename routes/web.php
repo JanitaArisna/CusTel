@@ -85,13 +85,13 @@ Route::get('/datin/assets/{sid}/edit', [AssetsDatinController::class, 'edit' ])-
 Route::get('/datin/{acc_num}/assets', [AssetsDatinController::class, 'index'])->name('datin.assets.index');
 
 
-
+/* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
 Route::get('datin/{acc_num}/assets', [AssetsDatinController::class, 'showAssets']);
 Route::get('datin/{acc_num}/bill', [BillDatinIndexController::class, 'Billindex']);
 //Route::get('datin/bill/{sid}', [BillDatinController::class, 'show'])->name('bill');
+/* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
 
-
-/* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController */
+/* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
 Route::prefix('datin/bill')->name('bill.')->group(function () {
     Route::get('/{sid}', [BillDatinController::class, 'index'])->name('index'); // Menampilkan daftar bill
     Route::get('/{sid}/create', [BillDatinController::class, 'create'])->name('create'); // Form tambah
@@ -101,6 +101,7 @@ Route::prefix('datin/bill')->name('bill.')->group(function () {
     Route::put('/{sid}/{tahun}/update', [BillDatinController::class, 'update'])->name('update'); // Update data
     Route::delete('/{sid}/{tahun}', [BillDatinController::class, 'destroy'])->name('destroy'); // Hapus data
 });
+/* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
 
 
 //Route::get('/datin/{acc_num}/bill/{sid}', [BillDatinController::class, 'showBill'])->name('bill.show');

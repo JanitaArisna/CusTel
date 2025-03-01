@@ -49,9 +49,7 @@
                         <th class="col-md-1">Start</th>
                         <th class="col-md-1">End</th>
                         <th class="col-md-2">Account Manager</th>
-                        @if(auth()->user()->role == 'admin')
-                            <th class="col-md-2">Aksi</th>
-                        @endif
+                        <th class="col-md-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,11 +62,9 @@
                         <td>{{ $item->start }}</td>
                         <td>{{ $item->end }}</td>
                         <td>{{ $item->am_nm }}</td>
-                        @if(auth()->user()->role == 'admin')
-                            <td>
-                                <a href="{{ route('bill.show', ['sid' => $item->sid]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>
-                            </td>
-                        @endif
+                        <td>
+                            <a href="{{ route('bill.show', ['sid' => $item->sid]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
