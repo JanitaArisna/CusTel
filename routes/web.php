@@ -8,6 +8,8 @@ use App\Http\Controllers\AccountManagerController;
 use App\Http\Controllers\Datin\AssetsDatinController;
 use App\Http\Controllers\Datin\BillDatinController;
 use App\Http\Controllers\Datin\BillDatinIndexController;
+use App\Http\Controllers\NonDatin\NonDatinAssetsController;
+use App\Http\Controllers\NonDatin\NonDatinBillController;
 
 use App\Http\Controllers\DashboardController;
 
@@ -102,6 +104,32 @@ Route::prefix('datin/bill')->name('bill.')->group(function () {
     Route::delete('/{sid}/{tahun}', [BillDatinController::class, 'destroy'])->name('destroy'); // Hapus data
 });
 /* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
+
+/* KHUSUS UNTUK NON DATIN CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
+Route::prefix('non-datin')->name('non-datin.')->group(function () { 
+    Route::get('/', [NonDatinController::class, 'index'])->name('index'); 
+    Route::get('/create', [NonDatinController::class, 'create'])->name('create'); 
+    Route::post('/store', [NonDatinController::class, 'store'])->name('store');     
+});
+/* KHUSUS UNTUK NON DATIN CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
+Route::prefix('non-datin/assets')->name('non-datin.assets.')->group(function () {
+    Route::get('/', [NonDatinAssetsController::class, 'index'])->name('index');
+    Route::get('/{cca}', [NonDatinAssetsController::class, 'show'])->name('show');
+    Route::get('/{snd}/edit', [NonDatinAssetsController::class, 'edit'])->name('edit');
+    Route::put('/{snd}', [NonDatinAssetsController::class, 'update'])->name('update');
+    Route::delete('/{snd}', [NonDatinAssetsController::class, 'destroy'])->name('destroy');
+});
+/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
+
+
+/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
+
+/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
+
+
+/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
+
+
 
 
 //Route::get('/datin/{acc_num}/bill/{sid}', [BillDatinController::class, 'showBill'])->name('bill.show');
