@@ -26,4 +26,9 @@ class NonDatin extends Model
         'end',
         'manager',
     ];
+
+    public function nonDatinBill()
+    {
+        return $this->hasMany(NonDatinBill::class, 'snd', 'snd');
+    }
 }

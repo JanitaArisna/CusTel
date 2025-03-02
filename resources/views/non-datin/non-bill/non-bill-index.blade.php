@@ -65,14 +65,14 @@
                             <td>{{ $items->end }}</td>
                             <td>{{ $items->manager }}</td>
                             <td>
-                                <a href="" class="btn btn-outline-info btn-sm">Show Bill</a>
+                                <a href="{{ route('non-datin.bill.show', ['cca' => $items->cca, 'snd' => $items->snd]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/datin'">Back</button>
+            <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/non-datin'">Back</button>
         </div>
     </div>
     <!-- AKHIR DATA -->
