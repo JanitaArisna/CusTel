@@ -90,7 +90,7 @@
                                 <td>{{ $items->segment_non }}</td>
                                 <td>{{ $items->desc_newbill }}</td>
                                 <td>
-                                    <a href="" class="btn btn-outline-dark btn-sm">Assets</a>
+                                    <a href="{{ route('non-datin.assets.index', $items->cca) }}" class="btn btn-outline-dark btn-sm">Assets</a>
                                     <a href="" class="btn btn-outline-dark btn-sm">Bill</a>
                                 </td>
                             <?php $lastCCA = $items->cca; ?>

@@ -28,7 +28,7 @@
                 <input type="text" class="form-control" id="nama" value="{{ Session::get('nama') }}" name="nama" required>
             </div>
             <div class="mb-3">
-                <label for="alamat" class="form-label">Alamat</label>
+                <label for="alamat" class="form-label">Address</label>
                 <input type="text" class="form-control" id="alamat" value="{{ Session::get('alamat') }}" name="alamat" required>
             </div>
             <div class="mb-3">

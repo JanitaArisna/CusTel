@@ -105,24 +105,29 @@ Route::prefix('datin/bill')->name('bill.')->group(function () {
 });
 /* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
 
-/* KHUSUS UNTUK NON DATIN CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
+
+
+/* KHUSUS UNTUK NON DATIN CONTROLLER NYA NonDatinController -------------------------------------------------------------- */
 Route::prefix('non-datin')->name('non-datin.')->group(function () { 
     Route::get('/', [NonDatinController::class, 'index'])->name('index'); 
     Route::get('/create', [NonDatinController::class, 'create'])->name('create'); 
     Route::post('/store', [NonDatinController::class, 'store'])->name('store');     
 });
-/* KHUSUS UNTUK NON DATIN CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
+/* KHUSUS UNTUK NON DATIN CONTROLLER NYA NonDatinController -------------------------------------------------------------- */
+
+
+
+/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
 Route::prefix('non-datin/assets')->name('non-datin.assets.')->group(function () {
-    Route::get('/', [NonDatinAssetsController::class, 'index'])->name('index');
-    Route::get('/{cca}', [NonDatinAssetsController::class, 'show'])->name('show');
-    Route::get('/{snd}/edit', [NonDatinAssetsController::class, 'edit'])->name('edit');
-    Route::put('/{snd}', [NonDatinAssetsController::class, 'update'])->name('update');
-    Route::delete('/{snd}', [NonDatinAssetsController::class, 'destroy'])->name('destroy');
+    Route::get('/{cca}', [NonDatinAssetsController::class, 'index'])->name('index');
+    Route::get('/', [NonDatinAssetsController::class, 'show'])->name('show');
+    Route::get('/{cca}/{snd}/edit', [NonDatinAssetsController::class, 'edit'])->name('edit');
+    Route::put('/{cca}/{snd}', [NonDatinAssetsController::class, 'update'])->name('update');
+    Route::delete('/{cca}/{snd}', [NonDatinAssetsController::class, 'destroy'])->name('destroy');
 });
 /* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
 
 
-/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
 
 /* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
 
