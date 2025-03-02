@@ -24,5 +24,6 @@ class NonDatin extends Model
         'bundling',
         'start',
         'end',
+        'manager',
     ];
 }

@@ -74,7 +74,8 @@ class NonDatinController extends Controller
         Session::flash('bundling', $request->bundling);
         Session::flash('start', $request->start);
         Session::flash('end', $request->end);
-
+        Session::flash('manager', $request->manager);
+        
         $request->validate([
             'cca' => 'required',
             'snd' => 'required|numeric|unique:non_datin,snd',
@@ -89,6 +90,7 @@ class NonDatinController extends Controller
             'bundling' => 'required',
             'start' => 'required',
             'end' => 'required',
+            'manager' => 'required',
         ],[
             'cca.required' => 'CCA harus diisi',
             'snd.required' => 'SND harus diisi',
@@ -104,6 +106,7 @@ class NonDatinController extends Controller
             'bundling.required' => 'Bundling harus diisi',
             'start.required' => 'Start harus diisi',
             'end.required' => 'End harus diisi',
+            'manager.required' => 'Manager harus diisi',
         ]);
 
         $data = [
@@ -120,6 +123,7 @@ class NonDatinController extends Controller
             'bundling' => $request->bundling,
             'start' => $request->start,
             'end' => $request->end,
+            'manager' => $request->manager,
         ];
         NonDatin::create($data);
         return redirect('/non-datin')->with('success', 'Data berhasil disimpan');

@@ -15,9 +15,6 @@ class NonDatinAssetsController extends Controller
     public function index($cca)
     {
         // Pastikan user sudah login dan memiliki peran sebagai admin
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            return redirect('/non-datin');
-        }
         $data = NonDatin::where('cca', $cca)->get(); // Ambil semua data dengan CCA yang sama
         return view('non-datin.non-assets.non-assets', compact('data', 'cca'));
 
@@ -80,6 +77,7 @@ class NonDatinAssetsController extends Controller
             'bundling' => 'required',
             'start' => 'required|date',
             'end' => 'required|date',
+            'manager' => 'required',
         ]);
 
         $data = NonDatin::where('cca', $cca)->where('snd', $snd)->firstOrFail();
@@ -95,6 +93,7 @@ class NonDatinAssetsController extends Controller
             'bundling' => $request->bundling,
             'start' => $request->start,
             'end' => $request->end,
+            'manager' => $request->manager,
         ]);
 
         return redirect()->route('non-datin.assets.index', ['cca' => $cca])

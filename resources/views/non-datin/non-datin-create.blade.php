@@ -84,6 +84,13 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="manager" class="form-label">Account Manager</label>
+                <select class="form-select" aria-label="Default select example" id="manager" name="manager" required>
+                    <option disabled {{ is_null(Session::get('manager')) ? 'selected' : '' }}>Pilih Account Manager</option>
+                    <option value="Janita" {{ Session::get('manager') == 'Janita' ? 'selected' : '' }}>Janita</option>
+                    <option value="Nabila" {{ Session::get('manager') == 'Nabila' ? 'selected' : '' }}>Nabila</option>
+                </select>
+            <div class="mb-3">
                 <label for="start_kontrak" class="form-label">Start Kontrak</label>
                 <input type="date" class="form-control" id="start" value="{{ Session::get('start') }}" name="start" required>
             </div>

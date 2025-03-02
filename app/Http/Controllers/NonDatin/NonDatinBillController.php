@@ -4,6 +4,7 @@ namespace App\Http\Controllers\NonDatin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\NonDatin;
 
 
 class NonDatinBillController extends Controller
@@ -11,9 +12,10 @@ class NonDatinBillController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($cca)
     {
-        //
+        $data = NonDatin::where('cca', $cca)->get(); // Ambil semua data dengan CCA yang sama
+        return view('non-datin.non-bill.non-bill-index', compact('data', 'cca'));
     }
 
     /**

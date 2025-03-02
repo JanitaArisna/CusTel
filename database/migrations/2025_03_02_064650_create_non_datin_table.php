@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('bundling');
             $table->date('start');
             $table->date('end');
+            $table->string('manager');
             $table->timestamps();
         });
     }

@@ -57,6 +57,7 @@
                         <th class="col-md-*">Bundling</th>
                         <th class="col-md-*">Start</th>
                         <th class="col-md-*">End</th>
+                        <th class="col-md-*">Manager</th>
                         @if(auth()->user()->role == 'admin')
                             <th class="col-md-*">Aksi</th>
                         @endif
@@ -78,6 +79,7 @@
                         <td>{{ $items->bundling }}</td>
                         <td>{{ $items->start }}</td>
                         <td>{{ $items->end }}</td>
+                        <td>{{ $items->manager }}</td>
 
                         @if(auth()->user()->role == 'admin')
                             <td>

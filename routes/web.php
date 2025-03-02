@@ -128,11 +128,16 @@ Route::prefix('non-datin/assets')->name('non-datin.assets.')->group(function () 
 /* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
 
 
-
-/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
-
-
-/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
+/* KHUSUS UNTUK NON DATIN Bill CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
+Route::prefix('non-datin/bill')->name('non-datin.bill.')->group(function () {
+    Route::get('/{cca}', [NonDatinBillController::class, 'index'])->name('index');
+    Route::get('/{cca}/{snd}', [NonDatinBillController::class, 'show'])->name('show');
+    Route::get('/{id}/create', [NonDatinBillController::class, 'create'])->name('create');
+    Route::get('/{id}/edit', [NonDatinBillController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [NonDatinBillController::class, 'update'])->name('update');
+    Route::delete('/{id}', [NonDatinBillController::class, 'destroy'])->name('destroy');
+});
+/* KHUSUS UNTUK NON DATIN Bill CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
 
 
 

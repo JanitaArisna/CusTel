@@ -85,6 +85,14 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="manager" class="form-label">Accountn Manager</label>
+                <select class="form-select" id="manager" name="manager" required>
+                    <option disabled>Pilih Account Manager</option>
+                    <option value="Janita" {{ $data->status == 'Janita' ? 'selected' : '' }}>Janita</option>
+                    <option value="Nabila" {{ $data->status == 'Nabila' ? 'selected' : '' }}>Nabila</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="start_kontrak" class="form-label">Start Kontrak</label>
                 <input type="date" class="form-control" id="start" value="{{ $data->start }}" name="start" required>
             </div>
@@ -94,7 +102,7 @@
             </div>
             <!-- Button Save and Cancel -->
             <button type="submit" class="btn btn-success">Update</button>
-            <a href='{{ url('/non-datin') }}' class="btn btn-danger">Cancel</a>
+            <a href='{{ route('non-datin.assets.index', ['cca' => $data->cca]) }}' class="btn btn-danger">Cancel</a>
         </form>
     </div>
 @endsection
