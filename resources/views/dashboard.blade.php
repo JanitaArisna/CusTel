@@ -40,7 +40,7 @@
                 <div class="card text-white bg-success mb-3">
                     <div class="card-header">PELANGGAN NON-DATIN</div>
                     <div class="card-body">
-                        <h2 class="card-title">0</h2>
+                        <h2 class="card-title">{{ $jumlah_non_datin }}</h2>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="card text-white bg-danger mb-3">
                     <div class="card-header">TOTAL PELANGGAN </div>
                     <div class="card-body">
-                        <h2 class="card-title">0</h2>
+                        <h2 class="card-title">{{ $total_jumlah }}</h2>
                     </div>
                 </div>
             </div>

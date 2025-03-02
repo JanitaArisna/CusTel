@@ -83,7 +83,7 @@
 
                         @if(auth()->user()->role == 'admin')
                             <td>
-                                <a href="" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <a href="{{ route('non-datin.assets.edit', ['cca' => $items->cca, 'snd' => $items->snd]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
                                 <form id="delete-form-{{ $items->snd }}" action="{{ route('non-datin.assets.destroy', ['cca' => $items->cca, 'snd' => $items->snd]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')

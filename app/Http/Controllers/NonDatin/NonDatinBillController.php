@@ -103,11 +103,10 @@ class NonDatinBillController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(request $cca, $snd)
+    public function edit($cca, $snd, $tahun)
     {
-        
-
     }
+
 
     /**
      * Update the specified resource in storage.

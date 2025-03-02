@@ -18,13 +18,13 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('datin')" :active="request()->routeIs('datin')">
+                    <x-nav-link :href="route('datin')" :active="request()->is('datin*')">
                         {{ __('Datin') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('non-datin')" :active="request()->routeIs('non-datin')">
+                    <x-nav-link :href="route('non-datin')" :active="request()->is('non-datin*')"> <!-- supaya dia mengikuti halaman ke sub halamannya -->
                         {{ __('Non-Datin') }}
                     </x-nav-link>
                 </div>

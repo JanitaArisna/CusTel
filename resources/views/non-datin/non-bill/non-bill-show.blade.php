@@ -71,7 +71,7 @@
                         <td>{{$nonBill->tahun}}</td>
                         @if(auth()->user()->role == 'admin')
                             <td>
-                                <a href="{{ route('non-datin.bill.edit', ['cca' => $nonBill->cca, 'snd' => $nonBill->snd]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <a href="" class="btn btn-outline-warning btn-sm">Edit</a>
                                 <form action="" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')

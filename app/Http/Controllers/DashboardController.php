@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Datin;
+use App\Models\NonDatin;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-    // Mencegah caching halaman dashboard
-
-        
         $jumlah_datin = Datin::distinct('sid')->count('sid'); // Menghitung jumlah data Datin
-        return view('dashboard')->with('jumlah_datin', $jumlah_datin); // Sesuaikan dengan nama view yang Anda inginkan
+        $jumlah_non_datin = NonDatin::distinct('snd')->count('snd'); // Menghitung jumlah data NonDatin
+
+        // Menghitung total jumlah data
+        $total_jumlah = $jumlah_datin + $jumlah_non_datin;
+
+        return view('dashboard', compact('jumlah_datin', 'jumlah_non_datin', 'total_jumlah')); // Sesuaikan dengan nama view yang Anda inginkan
 
     }
 
