@@ -54,6 +54,16 @@
                     </div>
                 </div>
             </div>
+
+                        <!-- Card JUMLAH SELURUHNYA -->
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">TOTAL ESTIMASI REVENUE </div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $total_jumlah }}</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

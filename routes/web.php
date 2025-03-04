@@ -135,7 +135,7 @@ Route::prefix('non-datin/bill')->name('non-datin.bill.')->group(function () {
     Route::get('/{cca}/{snd}/create', [NonDatinBillController::class, 'create'])->name('create');
     Route::post('/{cca}/{snd}', [NonDatinBillController::class, 'store'])->name('store');
     Route::get('/{cca}/{snd}/{tahun}/edit', [NonDatinBillController::class, 'edit'])->name('edit');
-    Route::put('/{cca}/{snd}', [NonDatinBillController::class, 'update'])->name('update');
+    Route::put('/{cca}/{snd}/{tahun}', [NonDatinBillController::class, 'update'])->name('update');
     Route::delete('/{cca}/{snd}/{tahun}', [NonDatinBillController::class, 'destroy'])->name('destroy');
 });
 /* KHUSUS UNTUK NON DATIN Bill CONTROLLER NYA NonDatinBillController -------------------------------------------------- */

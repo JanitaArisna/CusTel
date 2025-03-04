@@ -71,8 +71,8 @@
                         <td>{{$nonBill->tahun}}</td>
                         @if(auth()->user()->role == 'admin')
                             <td>
-                                <a href="" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form action="" method="POST" class="d-inline">
+                                <a href="{{ route('non-datin.bill.edit', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <form action="{{ route('non-datin.bill.destroy', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</button>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Datin;
+use App\Models\DatinBill;
 use App\Models\NonDatin;
+use App\Models\NonDatinBill;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -16,6 +18,12 @@ class DashboardController extends Controller
 
         // Menghitung total jumlah data
         $total_jumlah = $jumlah_datin + $jumlah_non_datin;
+
+        /*$jumalah_BillDatin = DatinBill::where('status', 'Bill')->count();
+        $jumalah_BillNonDatin = NonDatinBill::where('status', 'Bill')->count();
+
+        $jumalah_Bill = $jumalah_BillDatin + $jumalah_BillNonDatin;
+        */
 
         return view('dashboard', compact('jumlah_datin', 'jumlah_non_datin', 'total_jumlah')); // Sesuaikan dengan nama view yang Anda inginkan
 

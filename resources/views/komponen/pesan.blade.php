@@ -103,5 +103,43 @@ function confirmDelete(id) {
 
 
 
+@if (session('succes_UpdateNonDatinBill'))
+    <script>
+        Swal.fire({
+            icon: 'question',
+            title: 'Konfirmasi',
+            text: 'Yakin ingin mengupdate data?',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: "{{ session('succes_UpdateNonDatinBill') }}",
+                    showConfirmButton: true
+                });
+            }
+        });
+    </script>
+@endif
+
+@if (session('error_ErrorNonDatinBill'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: "{{ session('error') }}",
+            showConfirmButton: true
+        });
+    </script>
+@endif
+
+
+
+
+
+
 
 
