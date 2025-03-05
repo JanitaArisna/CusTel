@@ -29,4 +29,12 @@ class DatinBill extends Model
         'desember',
         'tahun',
     ];
+    
+    // Method untuk menghitung total semua data
+    public static function getTotalAllMonths()
+    {
+        return self::selectRaw('SUM(januari + februari + maret + april + mei + juni + juli + agustus + september + oktober + november + desember) as total')
+            ->first()
+            ->total;
+    }
 }

@@ -28,4 +28,11 @@ class NonDatinBill extends Model
     {
         return $this->belongsTo(NonDatin::class, 'snd', 'snd');
     }
+        // Method untuk menghitung total semua bulan
+    public static function getTotalAllMonths()
+    {
+        return self::selectRaw('SUM(januari + februari + maret + april + mei + juni + juli + agustus + september + oktober + november + desember) as total')
+            ->first()
+            ->total;
+    }
 }

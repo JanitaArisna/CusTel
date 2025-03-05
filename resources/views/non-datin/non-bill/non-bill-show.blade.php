@@ -93,6 +93,8 @@
                 </tbody>
             </table>
         </div>
+        <!-- Tombol Back -->
+        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/non-datin'">Back</button>
     </div>
     <!-- END DATA -->
 </x-app-layout>

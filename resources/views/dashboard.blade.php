@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <!-- Card JUMLAH SELURUHNYA -->
+            <!-- Card JUMLAH SELURUHNYA PELANGGAN -->
             <div class="col-md-4">
                 <div class="card text-white bg-danger mb-3">
                     <div class="card-header">TOTAL PELANGGAN </div>
@@ -55,16 +55,89 @@
                 </div>
             </div>
 
-                        <!-- Card JUMLAH SELURUHNYA -->
-            <div class="col-md-4">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">TOTAL ESTIMASI REVENUE </div>
-                    <div class="card-body">
-                        <h2 class="card-title">{{ $total_jumlah }}</h2>
+
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <canvas id="revenueChart"></canvas>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var revenueChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Datin', 'Non-Datin', 'Total'],
+                datasets: [{
+                    label: 'Total Estimasi Revenue',
+                    data: [{{ $total_datin_bill }}, {{ $total_non_datin_bill }}, {{ $total_jumlah_bill }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',  // Biru untuk Datin
+                        'rgba(75, 192, 192, 0.6)',  // Hijau untuk Non-Datin
+                        'rgba(255, 99, 132, 0.6)'   // Merah untuk Total
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'Rp ' + value.toLocaleString('id-ID');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+
 </x-app-layout>
+
+
+
+<!--
+            <!-- Card JUMLAH BILL DATIN -->
+            <!--<div class="col-md-4">
+                <div class="card text-black bg-white mb-3" style="width: 300px; height: 250px;">
+                    <div class="card-header">TOTAL ESTIMASI REVENUE DATIN</div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $formatted_total_datin_bill }}</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- Card JUMLAH BILL NON-DATIN -->
+            <!--<div class="col-md-4">
+                <div class="card text-black bg-white mb-3" style="width: 300px; height: 250px;">
+                    <div class="card-header">TOTAL ESTIMASI REVENUE NON-DATIN</div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $formatted_total_non_datin_bill }}</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- Card JUMLAH SELURUHNYA BILL-->
+            <!--<div class="col-md-4">
+                <div class="card text-black bg-white mb-3" style="width: 300px; height: 250px;">
+                    <div class="card-header">JUMLAH ESTIMASI REVENUE </div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $formatted_total_jumlah_bill }}</h2>
+                    </div>
+                </div>
+            </div>-->
