@@ -105,4 +105,6 @@
 
         </form>
     </div>
+    @include('komponen.pesan')
+
 @endsection

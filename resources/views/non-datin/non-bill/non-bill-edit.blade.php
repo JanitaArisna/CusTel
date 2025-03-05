@@ -4,7 +4,7 @@
 
 <div class="my-3 p-3 bg-body rounded shadow-sm">
     <h3 class="mb-4">EDIT BILL</h3>
-    <form action="{{ route('non-datin.bill.update', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" method="POST">
+    <form id="updateForm" action="{{ route('non-datin.bill.update', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" method="POST">
         @csrf
         @method('PUT')
         
@@ -29,7 +29,7 @@
         @endforeach
 
         <!-- Button Update and Cancel -->
-        <button type="submit" class="btn btn-primary" onclick="confirmUpdate()">Update</button>
+        <button type="submit" class="btn btn-success" onclick="confirmUpdate()">Update</button>
         <a href="{{ url('non-datin') }}" class="btn btn-danger">Cancel</a>
     </form>
 </div>

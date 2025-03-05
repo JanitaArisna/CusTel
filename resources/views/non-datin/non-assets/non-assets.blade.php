@@ -29,7 +29,7 @@
         // Fungsi untuk konfirmasi penghapusan
         function confirmDelete(sid) {
             if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById('delete-form-' + sid).submit();
+                document.getElementById('delete-form-' + snd).submit();
             }
         }
     </script>
@@ -38,6 +38,9 @@
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
         <h3 class="mb-1">ASSETS</h3>
+        <h2 class="text-xs text-gray-400 mb-1">Halaman ini berisi data Assets Non Datin</h2>
+        <h2 class="text-xs text-gray-400 mb-4">CCA : {{ $cca }}</h2>
+
 
         <!-- Tabel -->
         <div style="overflow-x: auto;"> <!-- Scroll horizontal jika tabel terlalu lebar -->
@@ -87,7 +90,7 @@
                                 <form id="delete-form-{{ $items->snd }}" action="{{ route('non-datin.assets.destroy', ['cca' => $items->cca, 'snd' => $items->snd]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="Submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
+                                    <button type="Button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ $items->snd }}')">Delete</button
                                 </form>
                             </td>
                         @endif

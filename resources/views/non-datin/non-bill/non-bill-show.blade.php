@@ -19,6 +19,15 @@
             border: 1px solid #dee2e6;
         }
     </style>
+    <script>
+        // Fungsi untuk konfirmasi penghapusan
+        function confirmDelete(sid) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                document.getElementById('delete-form-' + snd).submit();
+            }
+        }
+    </script>
+
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
@@ -72,10 +81,10 @@
                         @if(auth()->user()->role == 'admin')
                             <td>
                                 <a href="{{ route('non-datin.bill.edit', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form action="{{ route('non-datin.bill.destroy', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" method="POST" class="d-inline">
+                                <form id="delete-form-{{ $nonBill->snd }}" action="{{ route('non-datin.bill.destroy', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</button>
+                                    <button type="Button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ $nonBill->snd }}')">Delete</button>
                                 </form>
                             </td>
                         @endif

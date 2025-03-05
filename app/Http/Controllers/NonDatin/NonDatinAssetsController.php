@@ -97,7 +97,7 @@ class NonDatinAssetsController extends Controller
         ]);
 
         return redirect()->route('non-datin.assets.index', ['cca' => $cca])
-            ->with('success', 'Data berhasil diperbarui!');
+            ->with('success_UpdateAssetsNonDatin', 'Data berhasil diperbarui!');
     }
 
 

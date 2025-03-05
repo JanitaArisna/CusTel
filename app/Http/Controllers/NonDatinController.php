@@ -92,21 +92,21 @@ class NonDatinController extends Controller
             'end' => 'required',
             'manager' => 'required',
         ],[
-            'cca.required' => 'CCA harus diisi',
-            'snd.required' => 'SND harus diisi',
-            'snd.unique' => 'SND sudah ada',
-            'snd_g.required' => 'SND G harus diisi',
-            'ncli.required' => 'NCLI harus diisi',
-            'nama.required' => 'Nama harus diisi',
-            'alamat.required' => 'Alamat harus diisi',
-            'sto.required' => 'STO harus diisi',
-            'segment_non.required' => 'Segment harus diisi',
-            'produk.required' => 'Produk harus diisi',
-            'desc_newbill.required' => 'Desc Newbill harus diisi',
-            'bundling.required' => 'Bundling harus diisi',
-            'start.required' => 'Start harus diisi',
-            'end.required' => 'End harus diisi',
-            'manager.required' => 'Manager harus diisi',
+            'cca.required' => 'Mohon isi bidang CCA.',
+            'snd.required' => 'Mohon isi bidang SND.',
+            'snd.unique' => 'SND ini sudah terdaftar, silakan gunakan SND lain.',
+            'snd_g.required' => 'Mohon isi bidang SND G.',
+            'ncli.required' => 'Mohon isi bidang NCLI.',
+            'nama.required' => 'Mohon isi bidang Nama.',
+            'alamat.required' => 'Mohon isi bidang Alamat.',
+            'sto.required' => 'Mohon isi bidang STO.',
+            'segment_non.required' => 'Mohon isi bidang Segment.',
+            'produk.required' => 'Mohon isi bidang Produk.',
+            'desc_newbill.required' => 'Mohon isi bidang Deskripsi Newbill.',
+            'bundling.required' => 'Mohon isi bidang Bundling.',
+            'start.required' => 'Mohon isi tanggal mulai.',
+            'end.required' => 'Mohon isi tanggal berakhir.',
+            'manager.required' => 'Mohon isi bidang Manager.',
         ]);
 
         $data = [
@@ -126,7 +126,7 @@ class NonDatinController extends Controller
             'manager' => $request->manager,
         ];
         NonDatin::create($data);
-        return redirect('/non-datin')->with('success', 'Data berhasil disimpan');
+        return redirect('/non-datin')->with('success_CreateAssetsNonDatin', 'Data berhasil disimpan');
     }
 
     /**

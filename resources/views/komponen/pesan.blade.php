@@ -72,7 +72,11 @@ function confirmDelete(id) {
     }
 </script>
 
-<!--Alert ketika mau merubah data untuk di Update -->
+
+
+
+
+<!--Alert ketika mau merubah data untuk di Update Datin dan Non Datin ---------------------------------------------->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let updateForm = document.querySelector('#updateForm');
@@ -98,29 +102,30 @@ function confirmDelete(id) {
         }
     });
 </script>
+<!--Alert ketika mau merubah data untuk di Update Datin dan Non Datin ---------------------------------------------->
 
 
 
 
 
-@if (session('succes_UpdateNonDatinBill'))
+<!--Alert Bill Non Datin Edit, Error pada Bill Dan Delete ----------------------------------------------->
+@if (session()->has('succes_CreateNonDatinBill'))
     <script>
         Swal.fire({
-            icon: 'question',
-            title: 'Konfirmasi',
-            text: 'Yakin ingin mengupdate data?',
-            showCancelButton: true,
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: "{{ session('succes_UpdateNonDatinBill') }}",
-                    showConfirmButton: true
-                });
-            }
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('succes_CreateNonDatinBill') }}",
+            showConfirmButton: true
+        });
+    </script>
+@endif
+@if (session('success_UpdateNonDatinBill'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success_UpdateNonDatinBill') }}",
+            showConfirmButton: true
         });
     </script>
 @endif
@@ -130,16 +135,72 @@ function confirmDelete(id) {
         Swal.fire({
             icon: 'error',
             title: 'Gagal!',
-            text: "{{ session('error') }}",
+            text: "{{ session('error_ErrorNonDatinBill') }}",
+            showConfirmButton: true
+        });
+    </script>
+@endif
+<!- Alert Delete Untuk Assets dan Bill Non Datin------->
+<script>
+function confirmDelete(snd) {
+    Swal.fire({
+        title: 'Yakin akan menghapus data?',
+        text: "Data yang dihapus tidak bisa dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika tombol konfirmasi ditekan, submit form
+            document.getElementById('delete-form-' + snd).submit();
+        }
+    });
+    }
+</script>
+<!--Alert Bill Non Datin Edit, Error pada Bill Dan Delete ----------------------------------------------->
+
+
+<!--Alert Assets Non Datin Edit, Error pada Assets Dan Delete ----------------------------------------------->
+@if (session()->has('success_CreateAssetsNonDatin'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success_CreateAssetsNonDatin') }}",
             showConfirmButton: true
         });
     </script>
 @endif
 
+@if (session('success_UpdateAssetsNonDatin'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success_UpdateAssetsNonDatin') }}",
+            showConfirmButton: true
+        });
+    </script>
+@endif
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        @if ($errors->any())
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "🚫 {{ $error }}<br>"; // Menggunakan <br> sebagai pemisah
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: errorMessages, // Menggunakan html agar format tetap rapi
+            });
+        @endif
+    });
+</script>
 
 
-
-
-
-
-
+<!--Alert Assets Non Datin Edit, Error pada Assets Dan Delete ----------------------------------------------->

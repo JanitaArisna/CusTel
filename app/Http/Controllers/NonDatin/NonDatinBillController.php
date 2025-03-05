@@ -62,8 +62,7 @@ class NonDatinBillController extends Controller
             ->first();
  
         if ($NonBill) {
-            return redirect()->route('non-datin.bill.index', ['cca' => $request->cca])
-                ->with('error', 'Data Bill sudah ada');
+            return redirect()->back()->with('error_ErrorNonDatinBill', 'Data Tahun sudah ada.');
         }
 
         // Simpan data baru ke database
@@ -86,7 +85,7 @@ class NonDatinBillController extends Controller
 
         // Redirect dengan pesan sukses
         return redirect()->route('non-datin.bill.show', ['cca' => $request->cca, 'snd' => $request->snd])
-            ->with('success', 'Data Bill berhasil ditambahkan');
+            ->with('success_CreateNonDatinBill', 'Data Bill berhasil ditambahkan');
     }
 
 
@@ -151,7 +150,7 @@ class NonDatinBillController extends Controller
                 ->first();
 
             if ($duplikat) {
-                return redirect()->back()->with('error_ErrorNonDatinBill', 'Data sudah ada.');
+                return redirect()->back()->with('error_ErrorNonDatinBill', 'Data Tahun sudah ada.');
             }
 
             $nonBill->update([
@@ -171,7 +170,7 @@ class NonDatinBillController extends Controller
             ]);
 
             return redirect()->route('non-datin.bill.show', ['cca' => $cca, 'snd' => $snd])
-                ->with('succes_UpdateNonDatinBill', 'Data berhasil diupdate.');
+                ->with('success_UpdateNonDatinBill', 'Bill Non-Datin berhasil diupdate.');
             
     }
 

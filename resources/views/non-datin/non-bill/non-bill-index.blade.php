@@ -33,7 +33,7 @@
             @endphp
 
             @if ($firstItem)
-            <h1 class="text-xs text-gray-400 mb-1">Non-Datin</h1>
+            <h2 class="text-xs text-gray-400 mb-1">Halaman ini berisi data Bill Non Datin</h2>
             <h2 class="text-xs text-gray-400 mb-4">CCA : {{ $firstItem->cca }}</h2>
             @endif
 

@@ -5,7 +5,7 @@
     <!-- Konten form untuk edit data -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h3 class="mb-4">EDIT DATA PELANGGAN</h3>
-        <form action="{{ route('non-datin.assets.update', ['cca' => $data->cca, 'snd' => $data->snd]) }}" method="POST">
+        <form id="updateForm" action="{{ route('non-datin.assets.update', ['cca' => $data->cca, 'snd' => $data->snd]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -101,7 +101,7 @@
                 <input type="date" class="form-control" id="end" value="{{ $data->end }}" name="end" required>
             </div>
             <!-- Button Save and Cancel -->
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="submit" class="btn btn-success" onclick="confirmUpdate()">Update</button>
             <a href='{{ route('non-datin.assets.index', ['cca' => $data->cca]) }}' class="btn btn-danger">Cancel</a>
         </form>
     </div>
