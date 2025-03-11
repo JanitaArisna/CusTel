@@ -151,13 +151,17 @@ Route::prefix('non-datin/bill')->name('non-datin.bill.')->group(function () {
 //Route::get('/datin', [DatinController::class, 'index'])->name('datin');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/non-datin', [NonDatinController::class, 'index'])->name('non-datin');
-Route::get('/account-manager', [AccountManagerController::class, 'index'])->name('account-manager');
 
 Route::get('/assets', [AssetsDatinController::class, 'index'])->name('assets');
 Route::get('/bill', [BillDatinController::class, 'index'])->name('bill');
 
 
-
+Route::prefix('account-manager')->group(function () {
+    Route::get('/', [AccountManagerController::class, 'index'])->name('account-manager');
+    Route::get('/business-service', [AccountManagerController::class, 'business'])->name('business');
+    Route::get('/government-service', [AccountManagerController::class, 'government'])->name('government');
+    Route::get('/enterprise-service', [AccountManagerController::class, 'enterprise'])->name('enterprise');
+});
 
 
 //Route::get('/datin/{acc_num}/bill/{sid}/create', [BillDatinController::class, 'create']);

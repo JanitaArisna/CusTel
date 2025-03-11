@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('account-manager')" :active="request()->routeIs('account-manager')">
+                    <x-nav-link :href="route('account-manager')" :active="request()->is('account-manager*')"> <!-- supaya dia mengikuti halaman ke sub halamannya -->
                         {{ __('Account Manager') }}
                     </x-nav-link>
                 </div>
