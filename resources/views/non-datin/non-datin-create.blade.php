@@ -87,8 +87,13 @@
                 <label for="manager" class="form-label">Account Manager</label>
                 <select class="form-select" aria-label="Default select example" id="manager" name="manager" required>
                     <option disabled {{ is_null(Session::get('manager')) ? 'selected' : '' }}>Pilih Account Manager</option>
-                    <option value="Janita" {{ Session::get('manager') == 'Janita' ? 'selected' : '' }}>Janita</option>
-                    <option value="Nabila" {{ Session::get('manager') == 'Nabila' ? 'selected' : '' }}>Nabila</option>
+                    <option value="Oktoria Saragih" {{ Session::get('manager') == 'Oktoria Saragih' ? 'selected' : '' }}>Oktoria Saragih</option>
+                    <option value="Tiara Wulandari" {{ Session::get('manager') == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
+                    <option value="Ariesta Mirania Fabiola" {{ Session::get('manager') == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
+                    <option value="King Abdul Aziz" {{ Session::get('manager') == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
+                    <option value="Muhammad Rizky" {{ Session::get('manager') == 'Muhammad Rizky' ? 'selected' : '' }}>Muhammad Rizky</option>
+                    <option value="Ismael Marzuki" {{ Session::get('manager') == 'Ismael Marzuki' ? 'selected' : '' }}>Ismael Marzuki</option>
+
                 </select>
             <div class="mb-3">
                 <label for="start_kontrak" class="form-label">Start Kontrak</label>

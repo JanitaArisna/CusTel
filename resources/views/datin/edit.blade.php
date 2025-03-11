@@ -85,10 +85,13 @@
                 <label for="account_manager" class="form-label">Account Manager</label>
                 <select class="form-select" aria-label="Default select example" id="am_nm" value="{{ $data->am_nm }}" name="am_nm" required>
                     <option selected>Pilih Account Manager</option>
-                    <option value="Windi"{{ old('am_nm', $data->am_nm) == 'Windi' ? 'selected' : '' }}>Windi</option>
-                    <option value="Kafi"{{ old('am_nm', $data->am_nm) == 'Kafi' ? 'selected' : '' }}>Kafi</option>
-                    <option value="Nadin"{{ old('am_nm', $data->am_nm) == 'Nadin' ? 'selected' : '' }}>Nadin</option>
-                    <option value="Fitri"{{ old('am_nm', $data->am_nm) == 'Fitri' ? 'selected' : '' }}>Fitri</option>
+                    <option value="Oktoria Saragih"{{ old('am_nm', $data->am_nm) == 'Oktoria Saragih' ? 'selected' : '' }}>Oktoria Saragih</option>
+                    <option value="Tiara Wulandari"{{ old('am_nm', $data->am_nm) == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
+                    <option value="Ariesta Mirania Fabiola"{{ old('am_nm', $data->am_nm) == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
+                    <option value="King Abdul Aziz"{{ old('am_nm', $data->am_nm) == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
+                    <option value="Muhammad Rizky"{{ old('am_nm', $data->am_nm) == 'Muhammad Rizky' ? 'selected' : '' }}>Muhammad Rizky</option>
+                    <option value="Ismael Marzuki"{{ old('am_nm', $data->am_nm) == 'Ismael Marzuki' ? 'selected' : '' }}>Ismael Marzuki</option>
+
                 </select>
             </div>
 

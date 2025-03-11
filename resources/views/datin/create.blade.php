@@ -77,10 +77,12 @@
                 <label for="account_manager" class="form-label">Account Manager</label>
                 <select class="form-select" id="am_nm" name="am_nm" required>
                     <option disabled {{ is_null(Session::get('am_nm')) ? 'selected' : '' }}>Pilih Account Manager</option>
-                    <option value="Windi" {{ Session::get('am_nm') == 'Windi' ? 'selected' : '' }}>Windi</option>
-                    <option value="Kafi" {{ Session::get('am_nm') == 'Kafi' ? 'selected' : '' }}>Kafi</option>
-                    <option value="Nadin" {{ Session::get('am_nm') == 'Nadin' ? 'selected' : '' }}>Nadin</option>
-                    <option value="Fitri" {{ Session::get('am_nm') == 'Fitri' ? 'selected' : '' }}>Fitri</option>
+                    <option value="Oktoria Saragih" {{ Session::get('am_nm') == 'Oktoria Saragih' ? 'selected' : '' }}>Oktoria Saragih</option>
+                    <option value="Tiara Wulandari" {{ Session::get('am_nm') == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
+                    <option value="Ariesta Mirania Fabiola" {{ Session::get('am_nm') == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
+                    <option value="King Abdul Aziz" {{ Session::get('am_nm') == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
+                    <option value="Muhammad Rizky" {{ Session::get('am_nm') == 'Muhammad Rizky' ? 'selected' : '' }}>Muhammad Rizky</option>
+                    <option value="Ismael Marzuki" {{ Session::get('am_nm') == 'Ismael Marzuki' ? 'selected' : '' }}>Ismael Marzuki</option>
                 </select>
             </div>
 
