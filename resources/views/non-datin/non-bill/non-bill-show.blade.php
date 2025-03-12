@@ -65,18 +65,18 @@
                     @foreach ($data as $nonBill)
                     <tr>
                         <td>{{ $nonBill->snd }}</td>
-                        <td>{{$nonBill->januari}}</td>
-                        <td>{{$nonBill->februari}}</td>
-                        <td>{{$nonBill->maret}}</td>
-                        <td>{{$nonBill->april}}</td>
-                        <td>{{$nonBill->mei}}</td>
-                        <td>{{$nonBill->juni}}</td>
-                        <td>{{$nonBill->juli}}</td>
-                        <td>{{$nonBill->agustus}}</td>
-                        <td>{{$nonBill->september}}</td>
-                        <td>{{$nonBill->oktober}}</td>
-                        <td>{{$nonBill->november}}</td>
-                        <td>{{$nonBill->desember}}</td>
+                        <td>@rupiah($nonBill->januari)</td>
+                        <td>@rupiah($nonBill->februari)</td>
+                        <td>@rupiah($nonBill->maret)</td>
+                        <td>@rupiah($nonBill->april)</td>
+                        <td>@rupiah($nonBill->mei)</td>
+                        <td>@rupiah($nonBill->juni)</td>
+                        <td>@rupiah($nonBill->juli)</td>
+                        <td>@rupiah($nonBill->agustus)</td>
+                        <td>@rupiah($nonBill->september)</td>
+                        <td>@rupiah($nonBill->oktober)</td>
+                        <td>@rupiah($nonBill->november)</td>
+                        <td>@rupiah($nonBill->desember)</td>
                         <td>{{$nonBill->tahun}}</td>
                         @if(auth()->user()->role == 'admin')
                             <td>
