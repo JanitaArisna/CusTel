@@ -42,7 +42,7 @@ public function index(Request $request)
 
     $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
     return view('datin.datin', compact('data', 'assetsData'));
-}
+    }
 
     /**
      * Show the form for creating a new resource.

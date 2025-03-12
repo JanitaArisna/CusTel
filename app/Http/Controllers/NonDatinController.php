@@ -13,7 +13,7 @@ class NonDatinController extends Controller
 {
     public function index(Request $request)
     {
-        $katakunci = $request->kata_kunci;
+        $katakunci = $request->katakunci;
         $jumlahbaris = 10;
 
     if (strlen($katakunci)) {
@@ -40,8 +40,8 @@ class NonDatinController extends Controller
         ->paginate($jumlahbaris);
     }
 
-
-        return view('non-datin.non-datin',compact('data'));
+    $assetsData = NonDatin::select('cca', 'snd', 'ncli', 'nama', 'alamat', 'sto', 'segment_non', 'desc_newbill')->get();
+    return view('non-datin.non-datin',compact('data', 'assetsData'));
     }
     
     /**
