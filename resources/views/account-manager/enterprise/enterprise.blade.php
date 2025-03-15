@@ -34,6 +34,7 @@
                         <th class="col-md-3">Name</th>
                         <th class="col-md-1">Datin</th>
                         <th class="col-md-1">Non-Datin</th>
+                        <th class="col-md-1">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,10 @@
                             <td>{{ $manager['name'] }}</td>
                             <td>{{ $manager['datin'] }}</td>
                             <td>{{ $manager['non_datin'] }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-dark btn-sm" onclick="window.location.href = '{{ route('showEnterprise', ['dataEnterprise' => $manager['name']]) }}'">
+                                    View Details
+                                </button>
                         </tr>
                     @endforeach
                 </tbody>

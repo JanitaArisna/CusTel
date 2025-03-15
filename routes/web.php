@@ -12,6 +12,7 @@ use App\Http\Controllers\NonDatin\NonDatinAssetsController;
 use App\Http\Controllers\NonDatin\NonDatinBillController;
 
 use App\Http\Controllers\DashboardController;
+use Illuminate\Routing\Router;
 
 Route::get('/', function () {
     return redirect()->route('login'); // Redirect ke halaman login
@@ -155,13 +156,17 @@ Route::get('/non-datin', [NonDatinController::class, 'index'])->name('non-datin'
 Route::get('/assets', [AssetsDatinController::class, 'index'])->name('assets');
 Route::get('/bill', [BillDatinController::class, 'index'])->name('bill');
 
-
+/* KHUSUS UNTUK ACCOUNT MANAGER CONTROLLER NYA AccountManagerController -------------------------------------------------- */
 Route::prefix('account-manager')->group(function () {
     Route::get('/', [AccountManagerController::class, 'index'])->name('account-manager');
     Route::get('/business-service', [AccountManagerController::class, 'business'])->name('business');
+        Route::get('/business-service/{dataBusiness}/detail', [AccountManagerController::class, 'showBusiness'])->name('showBusiness');
     Route::get('/government-service', [AccountManagerController::class, 'government'])->name('government');
+        Route::get('/government-service/{dataGovernment}/detail', [AccountManagerController::class, 'showGovernment'])->name('showGovernment');
     Route::get('/enterprise-service', [AccountManagerController::class, 'enterprise'])->name('enterprise');
+        Route::get('/enterprise-service/{dataEnterprise}/detail', [AccountManagerController::class, 'showEnterprise'])->name('showEnterprise');
 });
+/* KHUSUS UNTUK ACCOUNT MANAGER CONTROLLER NYA AccountManagerController -------------------------------------------------- */
 
 
 //Route::get('/datin/{acc_num}/bill/{sid}/create', [BillDatinController::class, 'create']);

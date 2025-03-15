@@ -32,7 +32,7 @@ class AccountManagerController extends Controller
             ];
         });
 
-        return view('account-manager.business', compact('dataBusiness'));
+        return view('account-manager.business.business', compact('dataBusiness'));
     }
 
     public function government()
@@ -50,7 +50,7 @@ class AccountManagerController extends Controller
                 'non_datin' => NonDatin::where('manager', $name)->count() . ' Tabel',
             ];
         });
-        return view('account-manager.government', compact('dataGoverment'));
+        return view('account-manager.government.government', compact('dataGoverment'));
     }
 
     public function enterprise()
@@ -67,7 +67,43 @@ class AccountManagerController extends Controller
                 'non_datin' => NonDatin::where('manager', $name)->count() . ' Tabel',
             ];
         });
-        return view('account-manager.enterprise', compact('dataEnterprise'));
+        return view('account-manager.enterprise.enterprise', compact('dataEnterprise'));
+    }
+
+    public function showBusiness($dataBusiness)
+    {
+        // Ambil data dari datin berdasarkan nama account manager
+        $datinData = Datin::where('am_nm', $dataBusiness)->select('acc_num', 'cust_nm', 'sid')->get();
+
+        // Ambil data dari nondatin berdasarkan nama account manager
+        $nondatinData = NonDatin::where('manager', $dataBusiness)->select('cca', 'nama', 'snd')->get();
+
+        // Gabungkan kedua data dalam satu response
+        return view('account-manager.business.business-show', compact('datinData', 'nondatinData', 'dataBusiness'));
+    }
+
+    public function showGovernment($dataGoverment)
+    {
+        // Ambil data dari datin berdasarkan nama account manager
+        $datinData = Datin::where('am_nm', $dataGoverment)->select('acc_num', 'cust_nm', 'sid')->get();
+
+        // Ambil data dari nondatin berdasarkan nama account manager
+        $nondatinData = NonDatin::where('manager', $dataGoverment)->select('cca', 'nama', 'snd')->get();
+
+        // Gabungkan kedua data dalam satu response
+        return view('account-manager.government.government-show', compact('datinData', 'nondatinData', 'dataGoverment'));
+    }
+
+    public function showEnterprise($dataEnterprise)
+    {
+        // Ambil data dari datin berdasarkan nama account manager
+        $datinData = Datin::where('am_nm', $dataEnterprise)->select('acc_num', 'cust_nm', 'sid')->get();
+
+        // Ambil data dari nondatin berdasarkan nama account manager
+        $nondatinData = NonDatin::where('manager', $dataEnterprise)->select('cca', 'nama', 'snd')->get();
+
+        // Gabungkan kedua data dalam satu response
+        return view('account-manager.enterprise.enterprise-show', compact('datinData', 'nondatinData', 'dataEnterprise'));
     }
 }
 

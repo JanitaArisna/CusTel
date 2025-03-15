@@ -1,6 +1,6 @@
 <x-app-layout>
     @extends('layouts.template')
-    
+
     <style>
         /* Tambahkan gaya CSS untuk tabel dan komponen lainnya */
         .table th, .table td {
@@ -21,11 +21,11 @@
             border: 1px solid #dee2e6; /* Border untuk sel tabel */
         }
     </style>
-    
+
     <div class="container-fluid my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-5">BUSINESS SERVICE</h3>
-        
+        <h3 class="mb-5">GOVERNMENT SERVICE</h3>
+
         <div style="overflow-x: auto;"> <!-- Scroll horizontal jika tabel terlalu lebar -->
             <table class="table table-striped table-bordered">
                 <thead>
@@ -34,29 +34,35 @@
                         <th class="col-md-3">Name</th>
                         <th class="col-md-1">Datin</th>
                         <th class="col-md-1">Non-Datin</th>
+                        <th class="col-md-1">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($dataBusiness as $manager)
+                    @foreach ($dataGoverment as $manager)
                         <tr>
                             <td>{{ $manager['no'] }}</td>
                             <td>{{ $manager['name'] }}</td>
                             <td>{{ $manager['datin'] }}</td>
                             <td>{{ $manager['non_datin'] }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-dark btn-sm" onclick="window.location.href = '{{ route('showGovernment', ['dataGovernment' => $manager['name']]) }}'">
+                                    View Details
+                                </button>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        
+
+        <!-- Navigasi -->
         <div class="d-flex mt-3">
             <!-- Tombol Back (Kiri) -->
             <button type="button" class="btn btn-outline-primary" onclick="window.location.href = '/account-manager'">Back</button>
-            
-            <!-- Tombol Navigasi (Kanan) TANPA JARAK -->
+
+            <!-- Tombol Navigasi (Kanan) -->
             <div class="ms-auto">
-                <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '{{ route('enterprise') }}'" title="Halaman Enterprise">&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '{{ route('government') }}'" title="Halaman Government">&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '{{ route('business') }}'" title="Halaman Business">&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="window.location.href = '{{ route('enterprise') }}'" title="Halaman Enterprise">&gt;</button>
             </div>
         </div>
     </div>
