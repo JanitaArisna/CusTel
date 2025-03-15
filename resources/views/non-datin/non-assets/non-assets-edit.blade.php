@@ -88,7 +88,7 @@
                 <label for="manager" class="form-label">Accountn Manager</label>
                 <select class="form-select" id="manager" name="manager" required>
                     <option disabled>Pilih Account Manager</option>
-                    <option value="Oktoria Saragih" {{ $data->status == 'Oktoria Saragih' ? 'selected' : '' }}>Oktoria Saragih</option>
+                    <option value="Oktorio Saragih" {{ $data->status == 'Oktorio Saragih' ? 'selected' : '' }}>Oktorio Saragih</option>
                     <option value="Tiara Wulandari" {{ $data->status == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
                     <option value="Ariesta Mirania Fabiola" {{ $data->status == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
                     <option value="King Abdul Aziz" {{ $data->status == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>

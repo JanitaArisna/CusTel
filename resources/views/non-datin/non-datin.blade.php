@@ -64,15 +64,15 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-1">No</th>
-                        <th class="col-md-1">SND</th>
-                        <th class="col-md-1">Nama</th>
-                        <th class="col-md-2">CCA</th>
-                        <th class="col-md-2">NCLI</th>
-                        <th class="col-md-1">STO</th>
-                        <th class="col-md-1">Segment</th>
-                        <th class="col-md-1">Desc NewBill</th>
-                        <th class="col-md-1">Aksi</th>
+                        <th class="col-md-*">No</th>
+                        <th class="col-md-*">SND</th>
+                        <th class="col-md-*">Nama</th>
+                        <th class="col-md-*">CCA</th>
+                        <th class="col-md-*">NCLI</th>
+                        <th class="col-md-*">STO</th>
+                        <th class="col-md-*">Segment</th>
+                        <th class="col-md-*">Desc NewBill</th>
+                        <th class="col-md-*">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -38,7 +38,7 @@ class AccountManagerController extends Controller
     public function government()
     {
         $managerGoverment = [
-            'Oktoria Saragih',
+            'Oktorio Saragih',
             'Ismael Marzuki'
         ];
 

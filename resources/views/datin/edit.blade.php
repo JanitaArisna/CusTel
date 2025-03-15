@@ -85,7 +85,7 @@
                 <label for="account_manager" class="form-label">Account Manager</label>
                 <select class="form-select" aria-label="Default select example" id="am_nm" value="{{ $data->am_nm }}" name="am_nm" required>
                     <option selected>Pilih Account Manager</option>
-                    <option value="Oktoria Saragih"{{ old('am_nm', $data->am_nm) == 'Oktoria Saragih' ? 'selected' : '' }}>Oktoria Saragih</option>
+                    <option value="Oktorio Saragih"{{ old('am_nm', $data->am_nm) == 'Oktorio Saragih' ? 'selected' : '' }}>Oktorio Saragih</option>
                     <option value="Tiara Wulandari"{{ old('am_nm', $data->am_nm) == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
                     <option value="Ariesta Mirania Fabiola"{{ old('am_nm', $data->am_nm) == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
                     <option value="King Abdul Aziz"{{ old('am_nm', $data->am_nm) == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
