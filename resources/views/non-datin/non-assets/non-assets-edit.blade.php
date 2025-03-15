@@ -79,9 +79,6 @@
                     <option value="1P" {{ $data->produk =='1P' ? 'selected' : '' }}>1P</option>
                     <option value="2P" {{ $data->produk == '2P' ? 'selected' : '' }}>2P</option>
                     <option value="3P" {{ $data->produk == '3P' ? 'selected' : '' }}>3P</option>
-                    <option value="Internet Only" {{ $data->produk == 'Internet Only' ? 'selected' : '' }}>Internet Only</option>
-                    <option value="Internet dan Telpon" {{ $data->produk == 'Internet dan Telpon' ? 'selected' : '' }}>Internet dan Telpon</option>
-                    <option value="Internet TV Box dan Telpon" {{ $data->produk == 'Internet TV Box dan Telpon' ? 'selected' : '' }}>Internet TV Box dan Telpon</option>
                 </select>
             </div>
             <div class="mb-3">

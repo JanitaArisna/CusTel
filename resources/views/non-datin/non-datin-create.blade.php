@@ -78,9 +78,6 @@
                     <option value="1P" {{ Session::get('bundling') == '1P' ? 'selected' : '' }}>1P</option>
                     <option value="2P" {{ Session::get('bundling') == '2P' ? 'selected' : '' }}>2P</option>
                     <option value="3P" {{ Session::get('bundling') == '3P' ? 'selected' : '' }}>3P</option>
-                    <option value="Internet Only" {{ Session::get('bundling') == 'Internet Only' ? 'selected' : '' }}>Internet Only</option>
-                    <option value="Internet dan Telpon" {{ Session::get('bundling') == 'Internet dan Telpon' ? 'selected' : '' }}>Internet dan Telpon</option>
-                    <option value="Internet TV Box dan Telpon" {{ Session::get('bundling') == 'Internet TV Box dan Telpon' ? 'selected' : '' }}>Internet TV Box dan Telpon</option>
                 </select>
             </div>
             <div class="mb-3">
