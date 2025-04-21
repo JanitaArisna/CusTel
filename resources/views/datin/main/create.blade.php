@@ -5,7 +5,7 @@
     <!-- Konten form untuk tambah data -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h3 class="mb-4">INPUT DATA PELANGGAN BARU</h3>
-        <form action='{{ url ('datin') }}' method='post'>
+        <form action="{{ route('datin.store') }}" method="post">
             @csrf
             <div class="mb-3">
                 <label for="acc_num" class="form-label">Account Number</label>

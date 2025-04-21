@@ -85,8 +85,8 @@
                         <td>{{ $item->am_nm }}</td>
                         @if(auth()->user()->role == 'admin')
                             <td>
-                                <a href="{{ route('assets.edit', $item->sid) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form id="delete-form-{{ $item->sid }}" action="{{ route('assets.destroy', $item->sid) }}" method="POST" style="display: inline;">
+                                <a href="{{ route('assets.edit', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <form id="delete-form-{{ $item->sid }}" action="{{ route('assets.destroy', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete({{ $item->sid }})">Delete</button>
@@ -98,7 +98,6 @@
                 </tbody>
             </table>
         </div>
-
         <!-- Tombol Back -->
         <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/datin'">Back</button>
     </div>

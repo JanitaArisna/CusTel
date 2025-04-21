@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\datin;
 use Illuminate\Http\Request;
+use App\Models\Assets;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,7 +42,7 @@ public function index(Request $request)
     
 
     $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
-    return view('datin.datin', compact('data', 'assetsData'));
+    return view('datin.main.index', compact('data', 'assetsData'));
     }
 
     /**
@@ -54,7 +55,7 @@ public function index(Request $request)
             return redirect('/datin');
         }
 
-        return view('datin.create');
+        return view('datin.main.create');
 
     }
 
@@ -138,9 +139,13 @@ public function index(Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $acc_num)
     {
-        //
+        // Ambil data assets berdasarkan account number
+        $data = Assets::where('acc_num', $acc_num)->get();
+
+        // Kirim data ke view
+        return view('datin.assets.show', compact('data'));
     }
 
     /**
@@ -160,7 +165,7 @@ public function index(Request $request)
             return redirect('/datin')->with('error', 'Data tidak ditemukan');
         }
 
-        return view('datin.edit', compact('data', 'acc_num'));
+        return view('datin.assets.edit', compact('data', 'acc_num'));
     }
 
 
@@ -168,7 +173,7 @@ public function index(Request $request)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $acc_num, string $sid) // Parameter kedua adalah 'sid' sesuai dengan route
     {
         $request->validate([
             'acc_num' => 'required',
@@ -179,54 +184,64 @@ public function index(Request $request)
             'layanan_id' => 'required',
             'bw' => 'required',
             'kontrak' => 'required',
-            'start' => 'required',
-            'end' => 'required',
+            'start' => 'required|date', // Tambahkan validasi date
+            'end' => 'required|date|after:start', // Tambahkan validasi date dan after
             'am_nm' => 'required',
         ], [
             'acc_num.required' => 'Account Number wajib diisi',
             'cust_nm.required' => 'Customer Name wajib diisi',
             'nipnas.required' => 'NIPNAS wajib diisi',
-            'segment_id.required' => 'Segment ID wajib diisi',
+            'segment_id.required' => 'Segment wajib diisi',
             'witel.required' => 'Witel wajib diisi',
-            'layanan_id.required' => 'Layanan ID wajib diisi',
-            'bw.required' => 'BW wajib diisi',
+            'layanan_id.required' => 'Layanan wajib diisi',
+            'bw.required' => 'Bandwidth wajib diisi',
             'kontrak.required' => 'Kontrak wajib diisi',
-            'start.required' => 'Start wajib diisi',
-            'end.required' => 'End wajib diisi',
+            'start.required' => 'Tanggal Mulai Kontrak wajib diisi',
+            'start.date' => 'Format Tanggal Mulai Kontrak tidak valid',
+            'end.required' => 'Tanggal Akhir Kontrak wajib diisi',
+            'end.date' => 'Format Tanggal Akhir Kontrak tidak valid',
+            'end.after' => 'Tanggal Akhir Kontrak harus setelah Tanggal Mulai Kontrak',
             'am_nm.required' => 'Account Manager wajib diisi',
         ]);
-        $data = [
-            'acc_num' => $request->acc_num,
-            'cust_nm' => $request->cust_nm,
-            'nipnas' => $request->nipnas,
-            'segment_id' => $request->segment_id,
-            'witel' => $request->witel,
-            'layanan_id' => $request->layanan_id,
-            'bw' => $request->bw,
-            'kontrak' => $request->kontrak,
-            'start' => $request->start,
-            'end' => $request->end,
-            'am_nm' => $request->am_nm,
-        ];
-        datin::where('sid', $id)->update($data);
-        $cust_nm = $data['cust_nm'];
-        $acc_num = $data['acc_num'];
-        return redirect()->to('datin')->with([
-            'success_update'=> true, 
-            'cust_nm' => $cust_nm,
-            'acc_num' => $acc_num,
-            'sid' => $id]);
+
+        $data = Datin::where('sid', $sid)->firstOrFail(); // Cari data berdasarkan SID
+        $data->acc_num = $request->acc_num;
+        $data->cust_nm = $request->cust_nm;
+        $data->nipnas = $request->nipnas;
+        $data->segment_id = $request->segment_id;
+        $data->witel = $request->witel;
+        $data->layanan_id = $request->layanan_id;
+        $data->bw = $request->bw;
+        $data->kontrak = $request->kontrak;
+        $data->start = $request->start;
+        $data->end = $request->end;
+        $data->am_nm = $request->am_nm;
+        $data->save();
+
+        return redirect()->route('assets.show', ['acc_num' => $data->acc_num])
+                         ->with('success_update', 'Data pelanggan berhasil diupdate.')
+                         ->with('cust_nm', $data->cust_nm)
+                         ->with('acc_num', $data->acc_num);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $acc_num, $sid)
     {
-        datin::where('sid', $id)->delete();
-        return redirect()->to('datin')->with('success', 'Berhasil menghapus data');
+        // Cari aset berdasarkan $sid dan pastikan $acc_num sesuai
+        $datin = Datin::where('sid', $sid)
+                      ->where('acc_num', $acc_num)
+                      ->firstOrFail();
+
+        // Lakukan proses penghapusan aset
+        $datin->delete();
+
+        // Berikan respons setelah berhasil menghapus
+        return redirect()->route('assets.show', $acc_num)->with('success', 'Aset berhasil dihapus.');
+        // Atau, jika Anda ingin mengarahkan ke route lain:
+        // return redirect()->route('assets.show', $acc_num)->with('success', 'Aset berhasil dihapus.');
     }
-    
     
 
 }

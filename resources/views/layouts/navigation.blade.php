@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('datin')" :active="request()->is('datin*')">
+                    <x-nav-link :href="route('datin.index')" :active="request()->is('datin*')">
                         {{ __('Datin') }}
                     </x-nav-link>
                 </div>
@@ -91,7 +91,7 @@
         </div>
 
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('datin')" :active="request()->routeIs('datin')">
+            <x-responsive-nav-link :href="route('datin.index')" :active="request()->routeIs('datin')">
                 {{ __('Datin') }}
             </x-responsive-nav-link>
         </div>

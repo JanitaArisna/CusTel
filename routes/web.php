@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DatinController;
 use App\Http\Controllers\NonDatinController;
 use App\Http\Controllers\AccountManagerController;
-use App\Http\Controllers\Datin\AssetsDatinController;
 use App\Http\Controllers\Datin\BillDatinController;
 use App\Http\Controllers\Datin\BillDatinIndexController;
 use App\Http\Controllers\NonDatin\NonDatinAssetsController;
@@ -37,27 +36,18 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::resource('datin', DatinController::class)->names([
-    'index' => 'datin',
-    'create' => 'datin.create',
-    'store' => 'datin.store',
-    'show' => 'datin.show',
-    'edit' => 'datin.edit',
-    'update' => 'datin.update',
-    'destroy' => 'datin.destroy',
-]);
 
-Route::resource('datin/assets', AssetsDatinController::class)->names([
-    'index' => 'datin.assets.index',
-    'create' => 'datin.assets.create',
-    'store' => 'datin.assets.store',
-    'show' => 'datin.assets.show',
-    'edit' => 'datin.assets.edit',
-    'update' => 'datin.assets.update',
-    'destroy' => 'datin.assets.destroy',
-]);
-Route::put('/datin/assets/{sid}', [AssetsDatinController::class, 'update'])->name('assets.update');
-Route::delete('/datin/assets/{sid}', [AssetsDatinController::class, 'destroy'])->name('assets.destroy');
+// Route::resource('datin/assets', AssetsDatinController::class)->names([
+    //'index' => 'datin.assets.index',
+    //'create' => 'datin.assets.create',
+    //'store' => 'datin.assets.store',
+    //'show' => 'datin.assets.show',
+    //'edit' => 'datin.assets.edit',
+    //'update' => 'datin.assets.update',
+    //'destroy' => 'datin.assets.destroy',
+//]);
+//Route::put('/datin/assets/{sid}', [AssetsDatinController::class, 'update'])->name('assets.update');
+//Route::delete('/datin/assets/{sid}', [AssetsDatinController::class, 'destroy'])->name('assets.destroy');
 
 
 
@@ -83,16 +73,31 @@ Route::delete('/datin/assets/{sid}', [AssetsDatinController::class, 'destroy'])-
 }); */
 
 
-Route::get('/datin/assets/{sid}/edit', [AssetsDatinController::class, 'edit' ])->name('assets.edit');
+//Route::get('/datin/assets/{sid}/edit', [AssetsDatinController::class, 'edit' ])->name('assets.edit');
 //Route::get('datin/{acc_num}/assets/{sid}/edit', [DatinController::class, 'edit'])->name('assets.edit');
-Route::get('/datin/{acc_num}/assets', [AssetsDatinController::class, 'index'])->name('datin.assets.index');
+//Route::get('/datin/{acc_num}/assets', [AssetsDatinController::class, 'index'])->name('datin.assets.index');
 
 
 /* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
-Route::get('datin/{acc_num}/assets', [AssetsDatinController::class, 'showAssets']);
-Route::get('datin/{acc_num}/bill', [BillDatinIndexController::class, 'Billindex']);
+//Route::get('datin/{acc_num}/assets', [AssetsDatinController::class, 'showAssets']);
+//Route::get('datin/{acc_num}/bill', [BillDatinIndexController::class, 'Billindex']);
 //Route::get('datin/bill/{sid}', [BillDatinController::class, 'show'])->name('bill');
 /* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
+
+Route::prefix('datin')->name('datin.')->group(function () {
+    Route::get('/', [DatinController::class, 'index'])->name('index'); // Menampilkan daftar datin
+    Route::get('/create', [DatinController::class, 'create'])->name('create'); // Form tambah
+    Route::post('/store', [DatinController::class, 'store'])->name('store'); // Simpan data
+});
+
+Route::prefix('datin/{acc_num}/assets')->name('assets.')->group(function () {
+    Route::get('/', [DatinController::class, 'show'])->name('show'); // Menampilkan daftar assets
+    Route::get('/{sid}/edit', [DatinController::class, 'edit'])->name('edit'); // Form edit
+    Route::put('/{sid}', [DatinController::class, 'update'])->name('update'); // Update data
+    Route::delete('/{sid}', [DatinController::class, 'destroy'])->name('destroy'); // Hapus data
+});
+
+
 
 /* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
 Route::prefix('datin/bill')->name('bill.')->group(function () {
@@ -153,7 +158,7 @@ Route::prefix('non-datin/bill')->name('non-datin.bill.')->group(function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/non-datin', [NonDatinController::class, 'index'])->name('non-datin');
 
-Route::get('/assets', [AssetsDatinController::class, 'index'])->name('assets');
+//Route::get('/assets', [AssetsDatinController::class, 'index'])->name('assets');
 Route::get('/bill', [BillDatinController::class, 'index'])->name('bill');
 
 /* KHUSUS UNTUK ACCOUNT MANAGER CONTROLLER NYA AccountManagerController -------------------------------------------------- */

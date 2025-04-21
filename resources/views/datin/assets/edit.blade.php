@@ -1,17 +1,13 @@
-<!-- x-app-layout -->
 @extends('layouts.template')
 
 @section('konten')
-    
 
-
-    <!-- Konten form untuk tambah data -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h3 class="mb-1">UPDATE DATA PELANGGAN</h3>
+        <h3 class="mb-1">UPDATE DATA PELANGGA</h3>
         @if(isset($data) && $data->sid)
-            <p class="text-xs text-gray-400 mb-4">SID Pelanggan: {{ $data->sid }}</p>
+            <p class="text-xs text-gray-400 mb-4">SID Pelanggan: {{ $data->sid }}</h2>
         @endif
-        <form id="updateForm" action='{{ url ('datin/'.$data->sid) }}' method='post'>
+        <form id="updateForm" action="{{ route('assets.update', ['acc_num' => $data->acc_num, 'sid' => $data->sid]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -42,21 +38,18 @@
                     <option value="DGS-BTR" {{ old('segment_id', $data->segment_id) == 'DGS-BTR' ? 'selected' : '' }}>DGS-BTR</option>
                     <option value="DGS-R01" {{ old('segment_id', $data->segment_id) == 'DGS-R01' ? 'selected' : '' }}>DGS-R01</option>
                 </select>
-
             </div>
-
             <div class="mb-3">
                 <label for="witel" class="form-label">Witel</label>
                 <input type="text" class="form-control" id="witel" value="{{ $data->witel }}" name="witel" required>
             </div>
-
-            <!-- Additional Fields -->
             <div class="mb-3">
                 <label for="sid" class="form-label">SID</label>
-                <input type="text" class="form-control" id="sid" value="{{ $data->sid }}" name="sid" required>
+                <input type="text" class="form-control" id="sid" value="{{ $data->sid }}" name="sid" required readonly>
+                <small class="text-muted">SID tidak dapat diubah.</small>
             </div>
             <div class="mb-3">
-                <label for="layanan" class="form-label">Layanan</label> 
+                <label for="layanan" class="form-label">Layanan</label>
                 <select class="form-select" aria-label="Default select example" id="layanan_id" value="{{ $data->layanan_id }}" name="layanan_id" required>
                     <option selected>Pilih Layanan</option>
                     <option value="High Speed Internet"{{ old('layanan_id', $data->layanan_id) == 'High Speed Internet' ? 'selected' : '' }}>High Speed Internet</option>
@@ -91,11 +84,9 @@
                     <option value="King Abdul Aziz"{{ old('am_nm', $data->am_nm) == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
                     <option value="Muhammad Rizky"{{ old('am_nm', $data->am_nm) == 'Muhammad Rizky' ? 'selected' : '' }}>Muhammad Rizky</option>
                     <option value="Ismael Marzuki"{{ old('am_nm', $data->am_nm) == 'Ismael Marzuki' ? 'selected' : '' }}>Ismael Marzuki</option>
-
                 </select>
             </div>
 
-            <!-- Button Save and Cancel -->
             <button type="submit" class="btn btn-success">Update</button>
             <a href="{{ url()->previous() }}" class="btn btn-danger">Cancel</a>
 
@@ -104,4 +95,3 @@
     @include('komponen.pesan')
 
 @endsection
-<!-- /x-app-layout -->
