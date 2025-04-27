@@ -6,43 +6,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Datin;
 use App\Models\DatinBill;
+use App\Models\Billindex;
 
 class BillDatinController extends Controller
 {
     
-    public function index($sid)
+    public function index($acc_num)
     {
-        // Ambil data bill berdasarkan sid
-        $data = DatinBill::where('sid', $sid)->get();
+        // Ambil data bill
+        $data = Billindex::where('acc_num', $acc_num)->get();
 
-        // Ambil acc_num berdasarkan sid, misalnya jika hanya ada satu acc_num terkait dengan sid
-        //$acc_num = Datin::where('sid', $sid)->value('acc_num');  // atau cara lain untuk mendapatkan acc_num berdasarkan sid
         // Kirim data ke view
-        return view('datin.bill.bill-datin', compact('data','sid',));
+        return view('datin.bill.index', compact('data', 'acc_num'));
+        
     }
-    /*public function showBill($acc_num, $sid)
-    {
-        // Ambil data bill berdasarkan sid
-        dd($acc_num, $sid);
-        $data = DatinBill::where('sid', $sid)->get();
-
-        // Kirim data ke view
-        return view('datin.bill.bill-datin', compact('data', 'sid', 'acc_num'));
-    } */
 
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($sid)
+    public function create($acc_num, $sid)
     {
-        return view('datin.bill.bill-create', compact('sid'));
+        return view('datin.bill.create', compact('sid', 'acc_num'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $sid)
+    public function store(Request $request, $acc_num, $sid)
     {
         // Validasi input
         $request->validate([
@@ -87,8 +78,13 @@ class BillDatinController extends Controller
             'desember' => $request->desember,
         ]);
 
-        return redirect("/datin/bill/$sid")->with('success', 'Data berhasil disimpan!');
+        // Redirect ke halaman yang sesuai dengan menambahkan kedua parameter, acc_num dan sid
+        return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
+                        ->with('success', 'Data berhasil disimpan!');
     }
+
+
+
 
 
 
@@ -96,25 +92,33 @@ class BillDatinController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($sid)
-    {  
+    public function show($acc_num, $sid)
+    {
         $data = DatinBill::where('sid', $sid)->get();
-        return view('datin.bill.bill-datin', compact('data', 'sid'));
+
+        return view('datin.bill.show', compact('data', 'sid', 'acc_num'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($sid, $tahun)
+    public function edit($acc_num, $sid, $tahun)
     {
-        $bill = DatinBill::where('sid', $sid)->where('tahun', $tahun)->firstOrFail();
-        return view('datin.bill.bill-edit', compact('bill', 'sid', 'tahun'));
+        $datin = Datin::where('sid', $sid)->first();
+        $bill = DatinBill::where('sid', $sid)->where('tahun', $tahun)->first();
+
+        if (!$bill) {
+        return redirect()->back()->with('error', 'Data tidak ditemukan!');
+        }
+
+        return view('datin.bill.edit', compact('bill', 'acc_num', 'sid', 'datin'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $sid, $tahun)
+    public function update(Request $request, $acc_num, $sid, $tahun)
     {
         $request->validate([
             'januari' => 'required|numeric',
@@ -133,21 +137,49 @@ class BillDatinController extends Controller
         ]);
 
         $bill = DatinBill::where('sid', $sid)->where('tahun', $tahun)->firstOrFail();
-        $bill->update($request->all());
 
-        return redirect()->route('bill.show', [ 'sid' => $sid])
+        if (!$bill) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan!');
+        }
+
+        $duplikat = DatinBill::where('sid', $sid)
+            ->where('tahun', $request->tahun)
+            ->where('id', '!=', $bill->id) // Pastikan tahun yang sama tidak dihitung
+            ->first();
+        if ($duplikat) {
+            return redirect()->back()->with('error', 'Data untuk tahun ini sudah ada!')->withInput();
+        }
+        // Jika tidak ada duplikat, update data
+        $bill->update([
+            'tahun' => $request->tahun,
+            'januari' => $request->januari,
+            'februari' => $request->februari,
+            'maret' => $request->maret,
+            'april' => $request->april,
+            'mei' => $request->mei,
+            'juni' => $request->juni,
+            'juli' => $request->juli,
+            'agustus' => $request->agustus,
+            'september' => $request->september,
+            'oktober' => $request->oktober,
+            'november' => $request->november,
+            'desember' => $request->desember,
+        ]);
+        // Update data bill
+
+        return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
                          ->with('success', 'Data Bill berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($sid, $tahun)
+    public function destroy($acc_num, $sid, $tahun)
     {
         $bill = DatinBill::where('sid', $sid)->where('tahun', $tahun)->firstOrFail(); // Pastikan SID & tahun cocok
         $bill->delete();
 
-        return redirect()->route('bill.show', [ 'sid' => $sid])
+        return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
                          ->with('success', 'Data Bill berhasil dihapus!');
     }
 }

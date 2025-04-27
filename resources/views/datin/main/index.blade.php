@@ -95,7 +95,7 @@
                                 <td>{{ $item->witel }}</td>
                                 <td>
                                     <a href="{{ route('assets.show', $item->acc_num) }}" class="btn btn-outline-dark btn-sm">Assets</a>
-                                    <a href="{{ url('datin/'.$item->acc_num.'/bill') }}" class="btn btn-outline-dark btn-sm">Bill</a>
+                                    <a href="{{ route('bill.index', $item->acc_num) }}" class="btn btn-outline-dark btn-sm">Bill</a>
                                 </td>
                             </tr>
                             <?php $lastAccNum = $item->acc_num; ?>

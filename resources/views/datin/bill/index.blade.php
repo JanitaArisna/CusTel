@@ -14,7 +14,7 @@
             top: 0;
             z-index: 1;
         }
-        .table-striped tbody tr:nth-of-type(odd) { 
+        .table-striped tbody tr:nth-of-type(odd) {
             background-color: rgba(0, 0, 0, 0.05); /* Warna alternatif untuk baris ganjil */
         }
         .table-bordered th, .table-bordered td {
@@ -25,19 +25,10 @@
         }
     </style>
 
-    <script>
-        // Fungsi untuk konfirmasi penghapusan
-        function confirmDelete(sid) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById('delete-form-' + sid).submit();
-            }
-        }
-    </script>
-
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-1">ASSETS</h3>
+        <h3 class="mb-1">BILL</h3>
         @php
             $firstItem = $data->first();
         @endphp
@@ -51,21 +42,14 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-1">Acc Num</th>
+                        <th class="col-md-2">Acc Num</th>
                         <th class="col-md-2">Cus Name</th>
                         <th class="col-md-1">SID</th>
-                        <th class="col-md-1">NIPNAS</th>
-                        <th class="col-md-1">Segment</th>
-                        <th class="col-md-1">Witel</th>
-                        <th class="col-md-1">Layanan</th>
-                        <th class="col-md-1">Bandwidth</th>
                         <th class="col-md-1">Kontrak</th>
                         <th class="col-md-1">Start</th>
                         <th class="col-md-1">End</th>
-                        <th class="col-md-1">AM</th>
-                        @if(auth()->user()->role == 'admin')
-                            <th class="col-md-2">Aksi</th>
-                        @endif
+                        <th class="col-md-2">Account Manager</th>
+                        <th class="col-md-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,30 +58,19 @@
                         <td>{{ $item->acc_num }}</td>
                         <td>{{ $item->cust_nm }}</td>
                         <td>{{ $item->sid }}</td>
-                        <td>{{ $item->nipnas }}</td>
-                        <td>{{ $item->segment_id }}</td>
-                        <td>{{ $item->witel }}</td>
-                        <td>{{ $item->layanan_id }}</td>
-                        <td>{{ $item->bw }}</td>
                         <td>{{ $item->kontrak }}</td>
                         <td>{{ $item->start }}</td>
                         <td>{{ $item->end }}</td>
                         <td>{{ $item->am_nm }}</td>
-                        @if(auth()->user()->role == 'admin')
-                            <td>
-                                <a href="{{ route('assets.edit', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form id="delete-form-{{ $item->sid }}" action="{{ route('assets.destroy', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete({{ $item->sid }})">Delete</button>
-                                </form>
-                            </td>
-                        @endif
+                        <td>
+                            <a href="{{ route('bill.show', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
         <!-- Tombol Back -->
         <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/datin'">Back</button>
     </div>

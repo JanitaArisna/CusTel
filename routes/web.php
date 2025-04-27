@@ -84,6 +84,8 @@ Route::middleware('auth')->group(function () {
 //Route::get('datin/bill/{sid}', [BillDatinController::class, 'show'])->name('bill');
 /* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
 
+
+/* KHUSUS UNTUK DATIN DAN DATIN/ASSETS CONTROLLER NYA DatinController -------------------------------------------------------------- */
 Route::prefix('datin')->name('datin.')->group(function () {
     Route::get('/', [DatinController::class, 'index'])->name('index'); // Menampilkan daftar datin
     Route::get('/create', [DatinController::class, 'create'])->name('create'); // Form tambah
@@ -96,12 +98,14 @@ Route::prefix('datin/{acc_num}/assets')->name('assets.')->group(function () {
     Route::put('/{sid}', [DatinController::class, 'update'])->name('update'); // Update data
     Route::delete('/{sid}', [DatinController::class, 'destroy'])->name('destroy'); // Hapus data
 });
+/* KHUSUS UNTUK DATIN DAN DATIN/ASSETS CONTROLLER NYA DatinController -------------------------------------------------------------- */
 
 
 
 /* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
-Route::prefix('datin/bill')->name('bill.')->group(function () {
-    Route::get('/{sid}', [BillDatinController::class, 'index'])->name('index'); // Menampilkan daftar bill
+Route::get('datin/{acc_num}/bill', [BillDatinController::class, 'index'])->name('bill.index');
+
+Route::prefix('datin/{acc_num}/bill')->name('bill.')->group(function () {
     Route::get('/{sid}/create', [BillDatinController::class, 'create'])->name('create'); // Form tambah
     Route::post('/{sid}/store', [BillDatinController::class, 'store'])->name('store'); // Simpan data
     Route::get('/{sid}', [BillDatinController::class, 'show'])->name('show'); // Menampilkan detail bill
