@@ -50,14 +50,40 @@ class BillDatinController extends Controller
             'oktober' => 'nullable|integer',
             'november' => 'nullable|integer',
             'desember' => 'nullable|integer',
-        ]);
+        ],[
+            'tahun.required' => 'Tahun harus diisi.', // Pesan error kustom untuk required tahun (opsional)
+    ]);
 
         // Cek apakah kombinasi sid + tahun sudah ada
         $bill = DatinBill::where('sid', $sid)->where('tahun', $request->tahun)->first();
 
         if ($bill) {
             // Jika sudah ada, munculkan alert error dan kembalikan input sebelumnya
-            return redirect()->back()->with('error', 'Data untuk tahun ini sudah ada!')->withInput();
+            return redirect()->back()->with('error', 'duplicate_year')->withInput();
+        }
+
+        // Cek apakah ada bulan yang diisi
+        $bulan_diisi = false;
+        foreach (['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'] as $bulan) {
+            if ($request->filled($bulan)) {
+                $bulan_diisi = true;
+                break; // Keluar dari loop jika ada bulan yang diisi
+            }
+        }
+
+        if (!$request->filled('tahun') && !$bulan_diisi) {
+            // Jika tidak ada tahun dan bulan yang diisi, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'no_month_no_year')->withInput();
+        }
+
+        elseif (!$bulan_diisi) {
+            // Jika tidak ada bulan yang diisi, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'no_month')->withInput();
+        }
+
+        elseif (!$request->tahun) {
+            // Jika tahun tidak diisi, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'no_year')->withInput();
         }
 
         // Jika belum ada, buat data baru
@@ -82,12 +108,6 @@ class BillDatinController extends Controller
         return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
                         ->with('success', 'Data berhasil disimpan!');
     }
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
@@ -121,18 +141,6 @@ class BillDatinController extends Controller
     public function update(Request $request, $acc_num, $sid, $tahun)
     {
         $request->validate([
-            'januari' => 'required|numeric',
-            'februari' => 'required|numeric',
-            'maret' => 'required|numeric',
-            'april' => 'required|numeric',
-            'mei' => 'required|numeric',
-            'juni' => 'required|numeric',
-            'juli' => 'required|numeric',
-            'agustus' => 'required|numeric',
-            'september' => 'required|numeric',
-            'oktober' => 'required|numeric',
-            'november' => 'required|numeric',
-            'desember' => 'required|numeric',
             'tahun' => 'required|numeric',
         ]);
 
@@ -166,9 +174,14 @@ class BillDatinController extends Controller
             'desember' => $request->desember,
         ]);
         // Update data bill
-
-        return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
-                         ->with('success', 'Data Bill berhasil diperbarui!');
+        if ($bill) {
+            // Redirect ke halaman yang sesuai dengan menambahkan kedua parameter, acc_num dan sid
+            return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
+                ->with('success', 'bill_updated'); // Menggunakan key 'bill_updated'
+        } else {
+            return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
+                ->with('success', 'bill_not_updated');
+        }            
     }
 
     /**
@@ -180,7 +193,7 @@ class BillDatinController extends Controller
         $bill->delete();
 
         return redirect()->route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid])
-                         ->with('success', 'Data Bill berhasil dihapus!');
+                         ->with('delete_success', 'Data Bill berhasil dihapus!');
     }
 }
 

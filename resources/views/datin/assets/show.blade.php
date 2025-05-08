@@ -1,5 +1,6 @@
 <x-app-layout>
     @extends('layouts.template')
+    @include('komponen.pesan-datin')
 
     <style>
         /* Tambahkan gaya CSS untuk tabel */
@@ -25,19 +26,10 @@
         }
     </style>
 
-    <script>
-        // Fungsi untuk konfirmasi penghapusan
-        function confirmDelete(sid) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById('delete-form-' + sid).submit();
-            }
-        }
-    </script>
-
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-1">ASSETS</h3>
+        <h3 class="mb-1">ASSET</h3>
         @php
             $firstItem = $data->first();
         @endphp
@@ -86,10 +78,10 @@
                         @if(auth()->user()->role == 'admin')
                             <td>
                                 <a href="{{ route('assets.edit', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form id="delete-form-{{ $item->sid }}" action="{{ route('assets.destroy', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" method="POST" style="display: inline;">
+                                <form method="POST" action="{{ route('assets.destroy', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" class="form-delete d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete({{ $item->sid }})">Delete</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-delete">Delete</button>
                                 </form>
                             </td>
                         @endif
@@ -99,7 +91,7 @@
             </table>
         </div>
         <!-- Tombol Back -->
-        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/datin'">Back</button>
+        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href='{{ route('datin.index') }}'">Back</button>
     </div>
     <!-- AKHIR DATA -->
 

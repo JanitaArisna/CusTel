@@ -41,7 +41,7 @@ class NonDatinController extends Controller
     }
 
     $assetsData = NonDatin::select('cca', 'snd', 'ncli', 'nama', 'alamat', 'sto', 'segment_non', 'desc_newbill')->get();
-    return view('non-datin.non-datin',compact('data', 'assetsData'));
+    return view('non-datin.main.index',compact('data', 'assetsData'));
     }
     
     /**
@@ -53,7 +53,7 @@ class NonDatinController extends Controller
             return redirect('/non-datin');
         }
 
-        return view('non-datin.non-datin-create');
+        return view('non-datin.main.create');
     }
 
     /**

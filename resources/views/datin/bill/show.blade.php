@@ -1,5 +1,6 @@
 <x-app-layout>
     @extends('layouts.template')
+    @include('komponen.pesan-datin-bill')
 
     <style>
         .table th, .table td {
@@ -23,7 +24,7 @@
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-1">TAMPILAN BILL</h3>
+        <h3 class="mb-1">DETAIL BILL</h3>
         <h2 class="text-xs text-gray-400 mb-4">SID: {{ $sid }}</h2>  
         @if(auth()->user()->role == 'admin')
             <a href="{{ route('bill.create', ['acc_num' => $acc_num, 'sid' => $sid]) }}" class="btn btn-success">+ Tambah Bill</a><br><br>
@@ -56,7 +57,7 @@
                     @foreach ($data as $item)
                     <tr>
                         <td>{{ $item->sid }}</td>
-                        <td>@rupiah($item->januari)</td>
+                        <td>@rupiah($item->januari)</td> <!-- tulisan rupiah ada di appserviceprovider -->
                         <td>@rupiah($item->februari)</td>
                         <td>@rupiah($item->maret)</td>
                         <td>@rupiah($item->april)</td>
@@ -72,10 +73,10 @@
                         @if(auth()->user()->role == 'admin')
                         <td>
                             <a href="{{ route('bill.edit', ['acc_num' => $acc_num, 'sid' => $item->sid, 'tahun' => $item->tahun]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                            <form action="{{ route('bill.destroy', ['acc_num' => $acc_num, 'sid' => $item->sid, 'tahun' => $item->tahun]) }}" method="POST" class="d-inline">
+                            <form method="POST" action="{{ route('bill.destroy', ['acc_num' => $acc_num, 'sid' => $item->sid, 'tahun' => $item->tahun]) }}" class="form-delete d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</button>
+                                <button type="button" class="btn btn-outline-danger btn-sm btn-delete">Delete</button>
                             </form>
                         </td>
                         @endif
@@ -84,7 +85,7 @@
                 </tbody>
             </table>
         </div>
-        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.history.back()">Back</button>
+        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href='{{ route('bill.index', ['acc_num' => $acc_num]) }}'">Back</button>
     </div>
     <!-- AKHIR DATA -->
 </x-app-layout>

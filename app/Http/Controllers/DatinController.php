@@ -17,33 +17,58 @@ class DatinController extends Controller
 public function index(Request $request)
 {
     $katakunci = $request->katakunci;
+    $filter = $request->filter;
+    $bulan = $request->bulan;
     $jumlahbaris = 10;
 
+    $query = datin::query();
+
+    // Search
     if (strlen($katakunci)) {
-        $data = datin::whereIn('id', function ($query) use ($katakunci) {
-            $query->selectRaw('MIN(id)')
+        $query->whereIn('id', function ($sub) use ($katakunci) {
+            $sub->selectRaw('MIN(id)')
                 ->from('datin')
                 ->where('acc_num', 'like', "%$katakunci%")
                 ->orWhere('cust_nm', 'like', "%$katakunci%")
                 ->orWhere('nipnas', 'like', "%$katakunci%")
                 ->orWhere('segment_id', 'like', "%$katakunci%")
                 ->groupBy('acc_num');
-        })
-        ->paginate($jumlahbaris);
+        });
     } else {
-        $data = datin::whereIn('id', function ($query) {
-            $query->selectRaw('MIN(id)')
+        $query->whereIn('id', function ($sub) {
+            $sub->selectRaw('MIN(id)')
                 ->from('datin')
                 ->groupBy('acc_num');
-        })
-        ->orderBy('acc_num', 'desc')
-        ->paginate($jumlahbaris);
+        });
     }
-    
 
-    $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
-    return view('datin.main.index', compact('data', 'assetsData'));
+    // Filter bulan
+    if ($filter === 'bulan' && $bulan) {
+        $bulanMap = [
+            'januari' => 1, 'februari' => 2, 'maret' => 3,
+            'april' => 4, 'mei' => 5, 'juni' => 6,
+            'juli' => 7, 'agustus' => 8, 'september' => 9,
+            'oktober' => 10, 'november' => 11, 'desember' => 12
+        ];
+
+        if (isset($bulanMap[$bulan])) {
+            $query->whereMonth('start', $bulanMap[$bulan]);
+        }
     }
+
+    // Filter pelanggan
+    if ($filter === 'pelanggan') {
+        $query->orderBy('id', 'desc');
+    } else {
+        $query->orderBy('acc_num', 'desc');
+    }
+
+    $data = $query->paginate($jumlahbaris);
+    $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
+
+    return view('datin.main.index', compact('data', 'assetsData'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -131,7 +156,7 @@ public function index(Request $request)
         $cust_nm = $data['cust_nm'];
         $acc_num = $data['acc_num'];
         return redirect()->to('datin')->with([
-            'success_add'=> true, 
+            'success_datin'=> true, 
             'cust_nm' => $cust_nm,
             'acc_num' => $acc_num]);
     }
@@ -219,7 +244,7 @@ public function index(Request $request)
         $data->save();
 
         return redirect()->route('assets.show', ['acc_num' => $data->acc_num])
-                         ->with('success_update', 'Data pelanggan berhasil diupdate.')
+                         ->with('success_datin_update', 'Data pelanggan berhasil diupdate.')
                          ->with('cust_nm', $data->cust_nm)
                          ->with('acc_num', $data->acc_num);
     }
@@ -238,7 +263,7 @@ public function index(Request $request)
         $datin->delete();
 
         // Berikan respons setelah berhasil menghapus
-        return redirect()->route('assets.show', $acc_num)->with('success', 'Aset berhasil dihapus.');
+        return redirect()->route('assets.show', $acc_num)->with('success_datin_delete', 'Aset berhasil dihapus.');
         // Atau, jika Anda ingin mengarahkan ke route lain:
         // return redirect()->route('assets.show', $acc_num)->with('success', 'Aset berhasil dihapus.');
     }

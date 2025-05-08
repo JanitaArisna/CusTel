@@ -1,4 +1,5 @@
 @extends('layouts.template')
+@include('komponen.pesan-datin')
 
 @section('konten')
 
@@ -7,7 +8,7 @@
         @if(isset($data) && $data->sid)
             <p class="text-xs text-gray-400 mb-4">SID Pelanggan: {{ $data->sid }}</h2>
         @endif
-        <form id="updateForm" action="{{ route('assets.update', ['acc_num' => $data->acc_num, 'sid' => $data->sid]) }}" method="POST">
+        <form id="updateDatin" action="{{ route('assets.update', ['acc_num' => $data->acc_num, 'sid' => $data->sid]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -88,7 +89,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancel</a>
+            <a href="#" class="btn btn-danger btn-cancel-datin-edit">Cancel</a>
 
         </form>
     </div>
