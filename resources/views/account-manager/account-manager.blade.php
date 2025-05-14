@@ -12,12 +12,12 @@
         <a href="{{ route('government') }}" class="sm:w-full md:w-96 p-8 bg-gradient-to-r from-green-500 to-green-700 
             text-white text-xl font-bold text-center rounded-2xl shadow-xl 
             hover:bg-green-600 hover:scale-105 transition-all duration-300">
-            Government 
+            Government Service
         </a>
         <a href="{{ route('enterprise') }}" class="sm:w-full md:w-96 p-8 bg-gradient-to-r from-purple-500 to-purple-700 
             text-white text-xl font-bold text-center rounded-2xl shadow-xl 
             hover:bg-purple-600 hover:scale-105 transition-all duration-300">
-            Enterprise
+            Enterprise Service
         </a>
     </div>
     @endsection
