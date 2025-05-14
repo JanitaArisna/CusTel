@@ -19,4 +19,5 @@
     @include('layouts.navigation')
 </body>
 
+
 </html>

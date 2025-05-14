@@ -9,6 +9,8 @@ use App\Http\Controllers\Datin\BillDatinController;
 use App\Http\Controllers\Datin\BillDatinIndexController;
 use App\Http\Controllers\NonDatin\NonDatinAssetsController;
 use App\Http\Controllers\NonDatin\NonDatinBillController;
+use App\Http\Controllers\Datin\AssetsDatinController;
+use App\Http\Controllers\koneksi;
 
 use App\Http\Controllers\DashboardController;
 use Illuminate\Routing\Router;
@@ -184,6 +186,8 @@ Route::prefix('account-manager')->group(function () {
 //Route::get('/datin/{acc_num}/bill/{sid}/{id}/edit', [BillDatinController::class, 'edit']);
 //Route::put('/datin/{acc_num}/bill/{sid}/{id}', [BillDatinController::class, 'update']);
 //Route::delete('/datin/{acc_num}/bill/{sid}/{id}', [BillDatinController::class, 'destroy']);
+
+
 
 
 

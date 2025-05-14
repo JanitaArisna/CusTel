@@ -54,10 +54,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $item)
+                    @forelse ($data as $item)
                     <tr>
                         <td>{{ $item->sid }}</td>
-                        <td>@rupiah($item->januari)</td> <!-- tulisan rupiah ada di appserviceprovider -->
+                        <td>@rupiah($item->januari)</td>
                         <td>@rupiah($item->februari)</td>
                         <td>@rupiah($item->maret)</td>
                         <td>@rupiah($item->april)</td>
@@ -81,7 +81,11 @@
                         </td>
                         @endif
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="15" class="text-center text-muted">Bill untuk SID ini masih kosong</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

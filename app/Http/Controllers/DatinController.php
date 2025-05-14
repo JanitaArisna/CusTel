@@ -14,36 +14,14 @@ class DatinController extends Controller
     /**
      * Display a listing of the resource.
      */
-public function index(Request $request)
-{
-    $katakunci = $request->katakunci;
-    $filter = $request->filter;
-    $bulan = $request->bulan;
-    $jumlahbaris = 10;
+    public function index(Request $request)
+    {
+        $katakunci = $request->katakunci;
+        $filter = $request->filter;
+        $bulan = $request->bulan;
+        $jumlahbaris = 10;
 
-    $query = datin::query();
-
-    // Search
-    if (strlen($katakunci)) {
-        $query->whereIn('id', function ($sub) use ($katakunci) {
-            $sub->selectRaw('MIN(id)')
-                ->from('datin')
-                ->where('acc_num', 'like', "%$katakunci%")
-                ->orWhere('cust_nm', 'like', "%$katakunci%")
-                ->orWhere('nipnas', 'like', "%$katakunci%")
-                ->orWhere('segment_id', 'like', "%$katakunci%")
-                ->groupBy('acc_num');
-        });
-    } else {
-        $query->whereIn('id', function ($sub) {
-            $sub->selectRaw('MIN(id)')
-                ->from('datin')
-                ->groupBy('acc_num');
-        });
-    }
-
-    // Filter bulan
-    if ($filter === 'bulan' && $bulan) {
+        // Mapping nama bulan ke angka
         $bulanMap = [
             'januari' => 1, 'februari' => 2, 'maret' => 3,
             'april' => 4, 'mei' => 5, 'juni' => 6,
@@ -51,23 +29,58 @@ public function index(Request $request)
             'oktober' => 10, 'november' => 11, 'desember' => 12
         ];
 
-        if (isset($bulanMap[$bulan])) {
+        $query = datin::query();
+
+        // Filter bulan: dilakukan dulu sebelum pengelompokan
+        if ($filter === 'bulan' && $bulan && isset($bulanMap[$bulan])) {
             $query->whereMonth('start', $bulanMap[$bulan]);
         }
+
+        // Search kata kunci
+        if (strlen($katakunci)) {
+            $query->where(function ($q) use ($katakunci) {
+                $q->where('acc_num', 'like', "%$katakunci%")
+                ->orWhere('cust_nm', 'like', "%$katakunci%")
+                ->orWhere('nipnas', 'like', "%$katakunci%")
+                ->orWhere('segment_id', 'like', "%$katakunci%");
+            });
+        }
+
+        // Ambil hanya 1 record per acc_num setelah semua filter
+        $query->whereIn('id', function ($sub) use ($filter, $bulanMap, $bulan, $katakunci) {
+            $sub->selectRaw('MIN(id)')
+                ->from('datin');
+
+            // Filter bulan di subquery
+            if ($filter === 'bulan' && $bulan && isset($bulanMap[$bulan])) {
+                $sub->whereMonth('start', $bulanMap[$bulan]);
+            }
+
+            // Filter kata kunci di subquery
+            if (strlen($katakunci)) {
+                $sub->where(function ($q) use ($katakunci) {
+                    $q->where('acc_num', 'like', "%$katakunci%")
+                    ->orWhere('cust_nm', 'like', "%$katakunci%")
+                    ->orWhere('nipnas', 'like', "%$katakunci%")
+                    ->orWhere('segment_id', 'like', "%$katakunci%");
+                });
+            }
+
+            $sub->groupBy('acc_num');
+        });
+
+        // Urutan data
+        if ($filter === 'pelanggan') {
+            $query->orderBy('start', 'asc');
+        } else {
+            $query->orderBy('start', 'asc');
+        }
+
+        $data = $query->paginate($jumlahbaris);
+        $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
+
+        return view('datin.main.index', compact('data', 'assetsData'));
     }
-
-    // Filter pelanggan
-    if ($filter === 'pelanggan') {
-        $query->orderBy('id', 'desc');
-    } else {
-        $query->orderBy('acc_num', 'desc');
-    }
-
-    $data = $query->paginate($jumlahbaris);
-    $assetsData = datin::select('acc_num', 'sid', 'layanan_id', 'bw', 'kontrak', 'start', 'end', 'am_nm')->get();
-
-    return view('datin.main.index', compact('data', 'assetsData'));
-}
 
 
     /**
@@ -114,7 +127,7 @@ public function index(Request $request)
             'bw' => 'required',
             'kontrak' => 'required',
             'start' => 'required',
-            'end' => 'required',
+            'end' => 'required|after:start', // Tambahkan validasi date dan after
             'am_nm' => 'required',
         ], [
             'acc_num' => 'Account Number wajib diisi',
@@ -134,6 +147,7 @@ public function index(Request $request)
             'kontrak' => 'Kontrak wajib diisi',
             'start' => 'Start wajib diisi',
             'end' => 'End wajib diisi',
+            'end.after' => 'Tanggal Akhir Kontrak harus setelah Tanggal Mulai Kontrak',
             'am_nm' => 'Account Manager wajib diisi',
 
         ]);
@@ -164,14 +178,44 @@ public function index(Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(string $acc_num)
+    public function show(Request $request, string $acc_num)
     {
-        // Ambil data assets berdasarkan account number
-        $data = Assets::where('acc_num', $acc_num)->get();
+        $filter = $request->filter;
+        $bulan = $request->bulan;
 
-        // Kirim data ke view
+        $query = Assets::where('acc_num', $acc_num);
+
+        // Jika filter bulan diaktifkan (datang dari index dengan filter bulan)
+        if ($filter === 'bulan' && $bulan) {
+            $bulanMap = [
+                'januari' => 1, 'februari' => 2, 'maret' => 3,
+                'april' => 4, 'mei' => 5, 'juni' => 6,
+                'juli' => 7, 'agustus' => 8, 'september' => 9,
+                'oktober' => 10, 'november' => 11, 'desember' => 12
+            ];
+
+            if (isset($bulanMap[$bulan])) {
+                $query->whereMonth('start', $bulanMap[$bulan]);
+            }
+        }
+
+        // Tambahan: jika filter adalah 'pelanggan', urutkan berdasarkan tanggal start terbaru
+        if ($filter === 'pelanggan') {
+            $query->orderBy('start', 'asc');
+        } else {
+            $query->orderBy('start', 'asc');
+        }
+
+        $data = $query->get();
+
+        // Jika data sudah kosong karena dihapus atau tidak ada di bulan itu
+        if ($data->isEmpty()) {
+            return redirect()->route('datin.index')->with('info', 'Semua data asset sudah dihapus.');
+        }
+
         return view('datin.assets.show', compact('data'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

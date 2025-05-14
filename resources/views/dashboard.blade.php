@@ -177,10 +177,6 @@
         });
     });
 </script>
-
-
-
-
 </x-app-layout>
 
 

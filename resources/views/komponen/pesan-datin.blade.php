@@ -196,3 +196,17 @@
 </script>
 <!--AKHIR DELETE DATIN--------------------------------->
 
+<!--KHUSUS SHOW DATIN-------------------------------->
+<script>
+    @if(session('info'))
+        Swal.fire({
+            icon: 'info',
+            title: 'Info',
+            text: '{{ session('info') }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
+    @endif
+</script>
+<!--AKHIR SHOW DATIN--------------------------------->
+

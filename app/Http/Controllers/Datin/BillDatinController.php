@@ -11,15 +11,33 @@ use App\Models\Billindex;
 class BillDatinController extends Controller
 {
     
-    public function index($acc_num)
+    public function index(Request $request, $acc_num)
     {
-        // Ambil data bill
-        $data = Billindex::where('acc_num', $acc_num)->get();
+        $filter = $request->filter;
+        $bulan = $request->bulan;
 
-        // Kirim data ke view
+        $query = Billindex::where('acc_num', $acc_num);
+
+        // Filter berdasarkan bulan jika diperlukan
+        if ($filter === 'bulan' && $bulan) {
+            $bulanMap = [
+                'januari' => 1, 'februari' => 2, 'maret' => 3,
+                'april' => 4, 'mei' => 5, 'juni' => 6,
+                'juli' => 7, 'agustus' => 8, 'september' => 9,
+                'oktober' => 10, 'november' => 11, 'desember' => 12
+            ];
+
+            if (isset($bulanMap[$bulan])) {
+                // Ganti 'tanggal' dengan nama kolom tanggal di tabel bill jika beda
+                $query->whereMonth('start', $bulanMap[$bulan]);
+            }
+        }
+
+        $data = $query->get();
+
         return view('datin.bill.index', compact('data', 'acc_num'));
-        
     }
+
 
 
     /**

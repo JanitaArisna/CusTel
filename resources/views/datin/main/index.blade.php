@@ -62,30 +62,30 @@ document.addEventListener('DOMContentLoaded', function () {
             <form class="d-flex me-3" action="" method="get" id="searchForm">
                 <input class="form-control me-2" type="search" name="katakunci"
                     value="{{ Request::get('katakunci') }}"
-                    placeholder="Masukkan kata kunci" aria-label="Search" id="searchInput">
-                <button class="btn btn-secondary" type="submit">Cari</button>
+                    placeholder="Search by Keyword" aria-label="Search" id="searchInput">
+                <button class="btn btn-secondary" type="submit">Search</button>
             </form>
             <form method="GET" action="" class="d-flex me-3" id="filterForm">
                 <select name="filter" id="mainFilter" class="select-filter me-2">
                     <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All</option>
-                    <option value="bulan" {{ request('filter') == 'bulan' ? 'selected' : '' }}>Bulan</option>
-                    <option value="pelanggan" {{ request('filter') == 'pelanggan' ? 'selected' : '' }}>Pelanggan Baru</option>
+                    <option value="bulan" {{ request('filter') == 'bulan' ? 'selected' : '' }}>Month</option>
+                    <option value="pelanggan" {{ request('filter') == 'pelanggan' ? 'selected' : '' }}>New Customers</option>
                 </select>
 
                 <select name="bulan" id="bulanFilter" class="select-filter me-2" style="display: none;">
-                    <option value="">Pilih Bulan</option>
-                    <option value="januari">Januari</option>
-                    <option value="februari">Februari</option>
-                    <option value="maret">Maret</option>
+                    <option value="">Select Month</option>
+                    <option value="januari">January</option>
+                    <option value="februari">February</option>
+                    <option value="maret">March</option>
                     <option value="april">April</option>
-                    <option value="mei">Mei</option>
-                    <option value="juni">Juni</option>
-                    <option value="juli">Juli</option>
-                    <option value="agustus">Agustus</option>
+                    <option value="mei">May</option>
+                    <option value="juni">June</option>
+                    <option value="juli">July</option>
+                    <option value="agustus">August</option>
                     <option value="september">September</option>
-                    <option value="oktober">Oktober</option>
+                    <option value="oktober">October</option>
                     <option value="november">November</option>
-                    <option value="desember">Desember</option>
+                    <option value="desember">December</option>
                 </select>
 
                 <button class="btn btn-outline-dark me-3" type="submit">Filter</button>
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             @if(auth()->user()->role == 'admin')
-                <a href='{{ route('datin.create') }}' class="btn btn-success">+ Tambah Data</a>
+                <a href='{{ route('datin.create') }}' class="btn btn-success">+ Create New</a>
             @endif
         </div>
 
@@ -102,13 +102,13 @@ document.addEventListener('DOMContentLoaded', function () {
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-1">No</th>
-                        <th class="col-md-2">Account Number</th>
-                        <th class="col-md-2">Customer Name</th>
-                        <th class="col-md-1">NIPNAS</th>
-                        <th class="col-md-1">Segment</th>
-                        <th class="col-md-1">Witels</th>
-                        <th class="col-md-1">Aksi</th>
+                        <th class="col-md-*">No</th>
+                        <th class="col-md-*">Account Number</th>
+                        <th class="col-md-*">Customer Name</th>
+                        <th class="col-md-*">NIPNAS</th>
+                        <th class="col-md-*">Segment</th>
+                        <th class="col-md-*">Witels</th>
+                        <th class="col-md-*">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,8 +129,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <td>{{ $item->segment_id }}</td>
                                 <td>{{ $item->witel }}</td>
                                 <td>
-                                    <a href="{{ route('assets.show', $item->acc_num) }}" class="btn btn-outline-dark btn-sm">Asset</a>
-                                    <a href="{{ route('bill.index', $item->acc_num) }}" class="btn btn-outline-dark btn-sm">Bill</a>
+                                    <a href="{{ route('assets.show', ['acc_num' => $item->acc_num, 'filter' => request('filter'), 'bulan' => request('bulan') ]) }}" class="btn btn-outline-dark btn-sm">Asset</a>
+                                    <a href="{{ route('bill.index', ['acc_num' => $item->acc_num, 'filter' => request('filter'), 'bulan' => request('bulan') ]) }}" class="btn btn-outline-dark btn-sm">Bill</a>
                                 </td>
                             </tr>
                             <?php $lastAccNum = $item->acc_num; ?>

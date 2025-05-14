@@ -72,8 +72,8 @@
                         <td>{{ $item->layanan_id }}</td>
                         <td>{{ $item->bw }}</td>
                         <td>{{ $item->kontrak }}</td>
-                        <td>{{ $item->start }}</td>
-                        <td>{{ $item->end }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->start)->translatedFormat('F jS, Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->end)->translatedFormat('F jS, Y') }}</td>
                         <td>{{ $item->am_nm }}</td>
                         @if(auth()->user()->role == 'admin')
                             <td>
