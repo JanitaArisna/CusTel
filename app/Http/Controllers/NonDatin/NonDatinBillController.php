@@ -18,7 +18,7 @@ class NonDatinBillController extends Controller
     {
         $data = NonDatin::where('cca', $cca)->get(); // Ambil semua data dengan CCA yang sama
         $snd = 'default_snd';
-        return view('non-datin.non-bill.non-bill-index', compact('data', 'cca', 'snd'));
+        return view('non-datin.bill.index', compact('data', 'cca', 'snd'));
     }
 
     /**
@@ -30,7 +30,7 @@ class NonDatinBillController extends Controller
             return redirect('/non-datin');
         }
         $data = NonDatin::where('cca', $cca)->where('snd', $snd);
-        return view('non-datin.non-bill.non-bill-create', compact('data', 'cca', 'snd'));
+        return view('non-datin.bill.create', compact('data', 'cca', 'snd'));
     }
 
     /**
@@ -54,15 +54,40 @@ class NonDatinBillController extends Controller
             'oktober' => 'nullable|integer',
             'november' => 'nullable|integer',
             'desember' => 'nullable|integer',
-        ]);
+        ],[
+            'tahun.required' => 'Tahun harus diisi.', // Pesan error kustom untuk required tahun (opsional)]
+    ]);
 
         // Cek apakah data dengan SND dan tahun yang sama sudah ada
-        $NonBill = NonDatinBill::where('snd', $request->snd)
-            ->where('tahun', $request->tahun)
-            ->first();
- 
+        $NonBill = NonDatinBill::where('snd', $request->snd)->where('tahun', $request->tahun)->first();
+
         if ($NonBill) {
-            return redirect()->back()->with('error_ErrorNonDatinBill', 'Data Tahun sudah ada.');
+            // Jika sudah ada, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'nonduplicate_year')->withInput();
+        }
+
+        // Cek apakah ada bulan yang diisi
+        $bulan_diisi = false;
+        foreach (['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'] as $bulan) {
+            if ($request->filled($bulan)) {
+                $bulan_diisi = true;
+                break; // Keluar dari loop jika ada bulan yang diisi
+            }
+        }
+
+        if (!$request->filled('tahun') && !$bulan_diisi) {
+            // Jika tidak ada tahun dan bulan yang diisi, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'non_no_month_no_year')->withInput();
+        }
+
+        elseif (!$bulan_diisi) {
+            // Jika tidak ada bulan yang diisi, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'non_no_month')->withInput();
+        }
+
+        elseif (!$request->tahun) {
+            // Jika tahun tidak diisi, munculkan alert error dan kembalikan input sebelumnya
+            return redirect()->back()->with('error', 'non_no_year')->withInput();
         }
 
         // Simpan data baru ke database
@@ -84,8 +109,8 @@ class NonDatinBillController extends Controller
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('non-datin.bill.show', ['cca' => $request->cca, 'snd' => $request->snd])
-            ->with('success_CreateNonDatinBill', 'Data Bill berhasil ditambahkan');
+        return redirect()->route('nonbill.show', ['cca' => $request->cca, 'snd' => $request->snd])
+            ->with('success', 'Data Bill berhasil ditambahkan');
     }
 
 
@@ -94,9 +119,10 @@ class NonDatinBillController extends Controller
      */
     public function show($cca, $snd)
     {
-        $nonDatin = NonDatin::where('snd', $snd)->first();
+
         $data = NonDatinBill::where('snd', $snd)->get();
-        return view('non-datin.non-bill.non-bill-show', compact('data', 'cca', 'snd', 'nonDatin'));
+        
+        return view('non-datin.bill.show', compact('data', 'cca', 'snd'));
     }
 
     /**
@@ -111,7 +137,7 @@ class NonDatinBillController extends Controller
         return redirect()->back()->with('error', 'Data tidak ditemukan!');
         }
 
-        return view('non-datin.non-bill.non-bill-edit', compact('nonBill', 'cca', 'snd', 'nonDatin'));
+        return view('non-datin.bill.edit', compact('nonBill', 'cca', 'snd', 'nonDatin'));
     }
 
 
@@ -121,57 +147,49 @@ class NonDatinBillController extends Controller
     public function update(Request $request, $cca, $snd, $tahun)
     {
 
-        $request->validate(
-            [
-                'tahun' => 'required|numeric',
-                'januari' => 'nullable|numeric',
-                'februari' => 'nullable|numeric',
-                'maret' => 'nullable|numeric',
-                'april' => 'nullable|numeric',
-                'mei' => 'nullable|numeric',
-                'juni' => 'nullable|numeric',
-                'juli' => 'nullable|numeric',
-                'agustus' => 'nullable|numeric',
-                'september' => 'nullable|numeric',
-                'oktober' => 'nullable|numeric',
-                'november' => 'nullable|numeric',
-                'desember' => 'nullable|numeric',
-            ]);
+        $request->validate([
+            'tahun' => 'required|numeric',
+        ]);
 
-            $nonBill = NonDatinBill::where('snd', $snd)->where('tahun', $tahun)->firstOrFail();
+        $nonBill = NonDatinBill::where('snd', $snd)->where('tahun', $tahun)->firstOrFail();
 
-            if (!$nonBill) {
-                return redirect()->back()->with('error', 'Data tidak ditemukan.');
-            }
+        if (!$nonBill) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
 
-            $duplikat = NonDatinBill::where('snd', $snd)
-                ->where('tahun', $request->tahun)
-                ->where('id', '!=', $nonBill->id)
-                ->first();
+        $duplikat = NonDatinBill::where('snd', $snd)
+            ->where('tahun', $request->tahun)
+            ->where('id', '!=', $nonBill->id) // Pastikan tahun yang sama tidak dihitung
+            ->first();
 
-            if ($duplikat) {
-                return redirect()->back()->with('error_ErrorNonDatinBill', 'Data Tahun sudah ada.');
-            }
-
-            $nonBill->update([
-                'tahun' => $request->tahun,
-                'januari' => $request->januari,
-                'februari' => $request->februari,
-                'maret' => $request->maret,
-                'april' => $request->april,
-                'mei' => $request->mei,
-                'juni' => $request->juni,
-                'juli' => $request->juli,
-                'agustus' => $request->agustus,
-                'september' => $request->september,
-                'oktober' => $request->oktober,
-                'november' => $request->november,
-                'desember' => $request->desember,
-            ]);
-
-            return redirect()->route('non-datin.bill.show', ['cca' => $cca, 'snd' => $snd])
-                ->with('success_UpdateNonDatinBill', 'Bill Non-Datin berhasil diupdate.');
-            
+        if ($duplikat) {
+            return redirect()->back()->with('error', 'Data untuk tahun ini sudah ada!')->withInput();
+        }
+        // Jika tidak ada duplikat, update data
+        $nonBill->update([
+            'tahun' => $request->tahun,
+            'januari' => $request->januari,
+            'februari' => $request->februari,
+            'maret' => $request->maret,
+            'april' => $request->april,
+            'mei' => $request->mei,
+            'juni' => $request->juni,
+            'juli' => $request->juli,
+            'agustus' => $request->agustus,
+            'september' => $request->september,
+            'oktober' => $request->oktober,
+            'november' => $request->november,
+            'desember' => $request->desember,
+        ]);
+        // Update data bill
+        if ($nonBill) {
+        // Redirect ke halaman yang sesuai dengan menambahkan kedua parameter, CCA dan SND
+            return redirect()->route('nonbill.show', ['cca' => $cca, 'snd' => $snd])
+                ->with('success', 'nonbill_updated'); // Menggunakan key 'nonbill_updated'
+        } else {
+            return redirect()->route('nonbill.show', ['cca' => $cca, 'snd' => $snd])
+                ->with('success', 'nonbill_not_updated');
+        }     
     }
 
     /**
@@ -180,15 +198,12 @@ class NonDatinBillController extends Controller
     public function destroy($cca, $snd, $tahun)
     {
         // Ambil data berdasarkan snd dan tahun
-        $nonDatinBill = NonDatinBill::where('snd', $snd)->where('tahun', $tahun)->first();
-
-        if ($nonDatinBill) {
-            $nonDatinBill->delete();
-        }
-
+        $nonDatinBill = NonDatinBill::where('snd', $snd)->where('tahun', $tahun)->firstOrFail();// Pastikan SID & tahun cocok
+        $nonDatinBill->delete();
+         
         // Redirect ke halaman show dengan parameter yang sesuai
-        return redirect()->route('non-datin.bill.show', ['cca' => $cca, 'snd' => $snd])
-            ->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('nonbill.show', ['cca' => $cca, 'snd' => $snd])
+                        ->with('delete_success', 'Data Non Bill berhasil dihapus!');
     }
 
 

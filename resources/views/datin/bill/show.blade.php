@@ -24,7 +24,7 @@
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-1">DETAIL BILL</h3>
+        <h3 class="mb-1">DETAIL BILLS</h3>
         <h2 class="text-xs text-gray-400 mb-4">SID: {{ $sid }}</h2>  
         @if(auth()->user()->role == 'admin')
             <a href="{{ route('bill.create', ['acc_num' => $acc_num, 'sid' => $sid]) }}" class="btn btn-success">+ Tambah Bill</a><br><br>

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NonDatin extends Model
+class NonAssets extends Model
 {
     use HasFactory;
-
+    
     protected $table = 'non_datin';
     protected $fillable = [
         'cca',
@@ -25,9 +25,4 @@ class NonDatin extends Model
         'start',
         'manager',
     ];
-
-    public function nonDatinBill()
-    {
-        return $this->hasMany(NonDatinBill::class, 'snd', 'snd');
-    }
 }

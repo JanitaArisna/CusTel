@@ -43,20 +43,20 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-1">Acc Num</th>
-                        <th class="col-md-2">Cus Name</th>
-                        <th class="col-md-1">SID</th>
-                        <th class="col-md-1">NIPNAS</th>
-                        <th class="col-md-1">Segment</th>
-                        <th class="col-md-1">Witel</th>
-                        <th class="col-md-1">Layanan</th>
-                        <th class="col-md-1">Bandwidth</th>
-                        <th class="col-md-1">Kontrak</th>
-                        <th class="col-md-1">Start</th>
-                        <th class="col-md-1">End</th>
-                        <th class="col-md-1">AM</th>
+                        <th class="col-md-*">Acc Num</th>
+                        <th class="col-md-*">Cus Name</th>
+                        <th class="col-md-*">SID</th>
+                        <th class="col-md-*">NIPNAS</th>
+                        <th class="col-md-*">Segment</th>
+                        <th class="col-md-*">Witel</th>
+                        <th class="col-md-*">Layanan</th>
+                        <th class="col-md-*">Bandwidth</th>
+                        <th class="col-md-*">Kontrak</th>
+                        <th class="col-md-*">Start</th>
+                        <th class="col-md-*">End</th>
+                        <th class="col-md-*">AM</th>
                         @if(auth()->user()->role == 'admin')
-                            <th class="col-md-2">Aksi</th>
+                            <th class="col-md-*">Aksi</th>
                         @endif
                     </tr>
                 </thead>

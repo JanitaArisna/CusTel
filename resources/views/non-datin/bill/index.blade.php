@@ -33,7 +33,6 @@
             @endphp
 
             @if ($firstItem)
-            <h2 class="text-xs text-gray-400 mb-1">Halaman ini berisi data Bill Non Datin</h2>
             <h2 class="text-xs text-gray-400 mb-4">CCA : {{ $firstItem->cca }}</h2>
             @endif
 
@@ -47,8 +46,7 @@
                             <th class="col-md-*">SND</th>
                             <th class="col-md-*">SND Group</th>
                             <th class="col-md-*">STO</th>
-                            <th class="col-md-*">Start</th>
-                            <th class="col-md-*">End</th>
+                            <th class="col-md-*">Date of Subscription</th>
                             <th class="col-md-*">Account Manager</th>
                             <th class="col-md-*">Aksi</th>
                         </tr>
@@ -61,11 +59,10 @@
                             <td>{{ $items->snd }}</td>
                             <td>{{ $items->snd_g }}</td>
                             <td>{{ $items->sto }}</td>
-                            <td>{{ $items->start }}</td>
-                            <td>{{ $items->end }}</td>
+                            <td>{{ \Carbon\Carbon::parse($items->start)->translatedFormat('F jS, Y') }}</td>
                             <td>{{ $items->manager }}</td>
                             <td>
-                                <a href="{{ route('non-datin.bill.show', ['cca' => $items->cca, 'snd' => $items->snd]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>
+                                <a href="{{ route('nonbill.show', ['snd' => $items->snd, 'cca' => $items->cca]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>
                             </td>
                         </tr>
                         @endforeach

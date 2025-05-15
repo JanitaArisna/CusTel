@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DatinController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $katakunci = $request->katakunci;

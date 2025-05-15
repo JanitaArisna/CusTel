@@ -1,4 +1,5 @@
 @extends('layouts.template')
+@include('komponen.pesan-nondatin')
 
 @section('konten')
 
@@ -9,31 +10,31 @@
             @csrf
             <div class="mb-3">
                 <label for="cca" class="form-label">CCA</label>
-                <input type="text" class="form-control" id="cca" value="{{ Session::get('cca') }}" name="cca" required>
+                <input type="text" class="form-control" id="cca" value="{{ Session::get('cca') }}" name="cca">
             </div>
             <div class="mb-3">
                 <label for="snd" class="form-label">SND</label>
-                <input type="text" class="form-control" id="snd" value="{{ Session::get('snd') }}" name="snd" required>
+                <input type="text" class="form-control" id="snd" value="{{ Session::get('snd') }}" name="snd">
             </div>
             <div class="mb-3">
                 <label for="snd_g" class="form-label">SND Group</label>
-                <input type="text" class="form-control" id="snd_g" value="{{ Session::get('snd_g') }}" name="snd_g" required>
+                <input type="text" class="form-control" id="snd_g" value="{{ Session::get('snd_g') }}" name="snd_g">
             </div>
             <div class="mb-3">
                 <label for="ncli" class="form-label">NCLI</label>
-                <input type="text" class="form-control" id="ncli" value="{{ Session::get('ncli') }}" name="ncli" required>
+                <input type="text" class="form-control" id="ncli" value="{{ Session::get('ncli') }}" name="ncli">
             </div>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" value="{{ Session::get('nama') }}" name="nama" required>
+                <input type="text" class="form-control" id="nama" value="{{ Session::get('nama') }}" name="nama">
             </div>
             <div class="mb-3">
                 <label for="alamat" class="form-label">Address</label>
-                <input type="text" class="form-control" id="alamat" value="{{ Session::get('alamat') }}" name="alamat" required>
+                <input type="text" class="form-control" id="alamat" value="{{ Session::get('alamat') }}" name="alamat">
             </div>
             <div class="mb-3">
                 <label for="sto" class="form-label">STO</label>
-                <select class="form-select" aria-label="Default select example" id="sto" name="sto" required>
+                <select class="form-select" aria-label="Default select example" id="sto" name="sto">
                     <option disabled {{ is_null(Session::get('sto')) ? 'selected' : '' }}>Pilih STO</option>
                     <option value="Kabil" {{ Session::get('sto') == 'Kabil' ? 'selected' : '' }}>Kabil</option>
                     <option value="Panbil" {{ Session::get('sto') == 'Panbil' ? 'selected' : '' }}>Panbil</option>
@@ -43,7 +44,7 @@
             </div>
             <div class="mb-3">
                 <label for="segment_non" class="form-label">Segment</label>
-                <select class="form-select" aria-label="Default select example" id="segment_non" name="segment_non" required>
+                <select class="form-select" aria-label="Default select example" id="segment_non" name="segment_non">
                     <option disabled {{ is_null(Session::get('segment_non')) ? 'selected' : '' }}>Pilih Segment</option>
                     <option value="RBS" {{ Session::get('segment_non') == 'RBS' ? 'selected' : '' }}>RBS</option>
                     <option value="DGS" {{ Session::get('segment_non') == 'DGS' ? 'selected' : '' }}>DGS</option>
@@ -53,7 +54,7 @@
             </div>
             <div class="mb-3">
                 <label for="produk" class="form-label">Produk</label>
-                <select class="form-select" aria-label="Default select example" id="produk" name="produk" required>
+                <select class="form-select" aria-label="Default select example" id="produk" name="produk">
                     <option disabled {{ is_null(Session::get('produk')) ? 'selected' : '' }}>Pilih Produk</option>
                     <option value="Indibiz" {{ Session::get('produk') == 'Indibiz' ? 'selected' : '' }}>Indibiz</option>
                     <option value="WMS" {{ Session::get('produk') == 'WMS' ? 'selected' : '' }}>WMS</option>
@@ -64,7 +65,7 @@
             </div>
             <div class="mb-3">
                 <label for="desc_newbill" class="form-label">Desc NewBill</label>
-                <select class="form-select" aria-label="Default select example" id="desc_newbill" name="desc_newbill" required>
+                <select class="form-select" aria-label="Default select example" id="desc_newbill" name="desc_newbill">
                     <option disabled {{ is_null(Session::get('desc_newbill')) ? 'selected' : '' }}>Pilih Desc NewBill</option>
                     <option value="PRA NPC" {{ Session::get('desc_newbill') == 'PRA NPC' ? 'selected' : '' }}>PRA NPC</option>
                     <option value="C3MR" {{ Session::get('desc_newbill') == 'C3MR' ? 'selected' : '' }}>C3MR</option>
@@ -73,7 +74,7 @@
             </div>
             <div class="mb-3">
                 <label for="bundling" class="form-label">Bundling</label>
-                <select class="form-select" aria-label="Default select example" id="bundling" name="bundling" required>
+                <select class="form-select" aria-label="Default select example" id="bundling" name="bundling">
                     <option disabled {{ is_null(Session::get('bundling')) ? 'selected' : '' }}>Pilih Bundling</option>
                     <option value="1P" {{ Session::get('bundling') == '1P' ? 'selected' : '' }}>1P</option>
                     <option value="2P" {{ Session::get('bundling') == '2P' ? 'selected' : '' }}>2P</option>
@@ -82,7 +83,7 @@
             </div>
             <div class="mb-3">
                 <label for="manager" class="form-label">Account Manager</label>
-                <select class="form-select" aria-label="Default select example" id="manager" name="manager" required>
+                <select class="form-select" id="manager" name="manager">
                     <option disabled {{ is_null(Session::get('manager')) ? 'selected' : '' }}>Pilih Account Manager</option>
                     <option value="Oktorio Saragih" {{ Session::get('manager') == 'Oktorio Saragih' ? 'selected' : '' }}>Oktorio Saragih</option>
                     <option value="Tiara Wulandari" {{ Session::get('manager') == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
@@ -93,20 +94,15 @@
 
                 </select>
             <div class="mb-3">
-                <label for="start_kontrak" class="form-label">Start Kontrak</label>
-                <input type="date" class="form-control" id="start" value="{{ Session::get('start') }}" name="start" required>
-            </div>
-            <div class="mb-3">
-                <label for="end_kontrak" class="form-label">End Kontrak</label>
-                <input type="date" class="form-control" id="end" value="{{ Session::get('end') }}" name="end" required>
+                <label for="start_kontrak" class="form-label">Date of Subscription</label>
+                <input type="date" class="form-control" id="start" value="{{ Session::get('start') }}" name="start">
             </div>
 
             <!-- Button Save and Cancel -->
             <button type="submit" class="btn btn-success">Save</button>
-            <a href='{{ url('non-datin') }}' class="btn btn-danger">Cancel</a>
+            <a href="" class="btn btn-danger btn-cancel-nondatin-create">Cancel</a>
 
         </form>
     </div>
-    @include('komponen.pesan')
 
 @endsection

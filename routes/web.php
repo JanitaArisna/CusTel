@@ -38,55 +38,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-// Route::resource('datin/assets', AssetsDatinController::class)->names([
-    //'index' => 'datin.assets.index',
-    //'create' => 'datin.assets.create',
-    //'store' => 'datin.assets.store',
-    //'show' => 'datin.assets.show',
-    //'edit' => 'datin.assets.edit',
-    //'update' => 'datin.assets.update',
-    //'destroy' => 'datin.assets.destroy',
-//]);
-//Route::put('/datin/assets/{sid}', [AssetsDatinController::class, 'update'])->name('assets.update');
-//Route::delete('/datin/assets/{sid}', [AssetsDatinController::class, 'destroy'])->name('assets.destroy');
-
-
-
-
-/*Route::prefix('datin/{acc_num}')->group(function () {
-    Route::resource('bill', BillDatinIndexController::class)
-        ->names([
-            'index' => 'bill.index',
-        ]);
-});
-
-/*Route::prefix('datin/{sid}')->group(function () {
-    Route::resource('bill', BillDatinController::class)
-        ->names([
-            'index' => 'bill.index',
-            'create' => 'bill.create',
-            'store' => 'bill.store',
-            'show' => 'bill.show',
-            'edit' => 'bill.edit',
-            'update' => 'bill.update',
-            'destroy' => 'bill.destroy',
-        ]);
-}); */
-
-
-//Route::get('/datin/assets/{sid}/edit', [AssetsDatinController::class, 'edit' ])->name('assets.edit');
-//Route::get('datin/{acc_num}/assets/{sid}/edit', [DatinController::class, 'edit'])->name('assets.edit');
-//Route::get('/datin/{acc_num}/assets', [AssetsDatinController::class, 'index'])->name('datin.assets.index');
-
-
-/* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
-//Route::get('datin/{acc_num}/assets', [AssetsDatinController::class, 'showAssets']);
-//Route::get('datin/{acc_num}/bill', [BillDatinIndexController::class, 'Billindex']);
-//Route::get('datin/bill/{sid}', [BillDatinController::class, 'show'])->name('bill');
-/* KHUSUS UNTUK HALAMAN DATIN YANG ROUTER KE ASSETS DAN BILL -------------------------------------------------------------- */
-
-
 /* KHUSUS UNTUK DATIN DAN DATIN/ASSETS CONTROLLER NYA DatinController -------------------------------------------------------------- */
 Route::prefix('datin')->name('datin.')->group(function () {
     Route::get('/', [DatinController::class, 'index'])->name('index'); // Menampilkan daftar datin
@@ -101,7 +52,6 @@ Route::prefix('datin/{acc_num}/assets')->name('assets.')->group(function () {
     Route::delete('/{sid}', [DatinController::class, 'destroy'])->name('destroy'); // Hapus data
 });
 /* KHUSUS UNTUK DATIN DAN DATIN/ASSETS CONTROLLER NYA DatinController -------------------------------------------------------------- */
-
 
 
 /* KHUSUS UNTUK DATIN BILL CONTROLLER NYA BillDatinController -------------------------------------------------------------- */
@@ -119,53 +69,40 @@ Route::prefix('datin/{acc_num}/bill')->name('bill.')->group(function () {
 
 
 
-/* KHUSUS UNTUK NON DATIN CONTROLLER NYA NonDatinController -------------------------------------------------------------- */
+/* KHUSUS UNTUK NON DATIN/ASSET CONTROLLER NYA NonDatinController -------------------------------------------------------------- */
 Route::prefix('non-datin')->name('non-datin.')->group(function () { 
     Route::get('/', [NonDatinController::class, 'index'])->name('index'); 
     Route::get('/create', [NonDatinController::class, 'create'])->name('create'); 
     Route::post('/store', [NonDatinController::class, 'store'])->name('store');     
 });
-/* KHUSUS UNTUK NON DATIN CONTROLLER NYA NonDatinController -------------------------------------------------------------- */
 
 
-
-/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
-Route::prefix('non-datin/assets')->name('non-datin.assets.')->group(function () {
-    Route::get('/{cca}', [NonDatinAssetsController::class, 'index'])->name('index');
-    Route::get('/', [NonDatinAssetsController::class, 'show'])->name('show');
-    Route::get('/{cca}/{snd}/edit', [NonDatinAssetsController::class, 'edit'])->name('edit');
-    Route::put('/{cca}/{snd}', [NonDatinAssetsController::class, 'update'])->name('update');
-    Route::delete('/{cca}/{snd}', [NonDatinAssetsController::class, 'destroy'])->name('destroy');
+Route::prefix('non-datin/{cca}/assets')->name('nonassets.')->group(function () {
+    Route::get('/', [NonDatinController::class, 'show'])->name('show');
+    Route::get('/{snd}/edit', [NonDatinController::class, 'edit'])->name('edit');
+    Route::put('/{snd}', [NonDatinController::class, 'update'])->name('update');
+    Route::delete('/{snd}', [NonDatinController::class, 'destroy'])->name('destroy');
 });
-/* KHUSUS UNTUK NON DATIN ASSETS CONTROLLER NYA NonDatinAssetsController -------------------------------------------------- */
+/* KHUSUS UNTUK NON DATIN/ ASSET CONTROLLER NYA NonDatinController -------------------------------------------------- */
 
 
 /* KHUSUS UNTUK NON DATIN Bill CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
-Route::prefix('non-datin/bill')->name('non-datin.bill.')->group(function () {
-    Route::get('/{cca}', [NonDatinBillController::class, 'index'])->name('index');
-    Route::get('/{cca}/{snd}', [NonDatinBillController::class, 'show'])->name('show');
-    Route::get('/{cca}/{snd}/create', [NonDatinBillController::class, 'create'])->name('create');
-    Route::post('/{cca}/{snd}', [NonDatinBillController::class, 'store'])->name('store');
-    Route::get('/{cca}/{snd}/{tahun}/edit', [NonDatinBillController::class, 'edit'])->name('edit');
-    Route::put('/{cca}/{snd}/{tahun}', [NonDatinBillController::class, 'update'])->name('update');
-    Route::delete('/{cca}/{snd}/{tahun}', [NonDatinBillController::class, 'destroy'])->name('destroy');
+Route::get('non-datin/{cca}/bill', [NonDatinBillController::class, 'index'])->name('nonbill.index');
+
+Route::prefix('non-datin/{cca}/bill')->name('nonbill.')->group(function () {
+    Route::get('/{snd}', [NonDatinBillController::class, 'show'])->name('show');
+    Route::get('/{snd}/create', [NonDatinBillController::class, 'create'])->name('create');
+    Route::post('/{snd}', [NonDatinBillController::class, 'store'])->name('store');
+    Route::get('/{snd}/{tahun}/edit', [NonDatinBillController::class, 'edit'])->name('edit');
+    Route::put('/{snd}/{tahun}', [NonDatinBillController::class, 'update'])->name('update');
+    Route::delete('/{snd}/{tahun}', [NonDatinBillController::class, 'destroy'])->name('destroy');
 });
 /* KHUSUS UNTUK NON DATIN Bill CONTROLLER NYA NonDatinBillController -------------------------------------------------- */
-
-
-
-
-//Route::get('/datin/{acc_num}/bill/{sid}', [BillDatinController::class, 'showBill'])->name('bill.show');
-
-//Route::get('datin/{acc_num}/bill/{sid}/{id}', [BillDatinController::class, 'show']);
 
 
 //Route::get('/datin', [DatinController::class, 'index'])->name('datin');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/non-datin', [NonDatinController::class, 'index'])->name('non-datin');
-
-//Route::get('/assets', [AssetsDatinController::class, 'index'])->name('assets');
-Route::get('/bill', [BillDatinController::class, 'index'])->name('bill');
 
 /* KHUSUS UNTUK ACCOUNT MANAGER CONTROLLER NYA AccountManagerController -------------------------------------------------- */
 Route::prefix('account-manager')->group(function () {

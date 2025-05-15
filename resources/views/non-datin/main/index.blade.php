@@ -1,5 +1,6 @@
 <x-app-layout>
     @extends('layouts.template')
+    @include('komponen.pesan-nondatin')
 
         <style>
         /* Tambahkan gaya CSS untuk tabel dan komponen lainnya */
@@ -35,12 +36,20 @@
     </style>
 
     <script>
-        // Fungsi untuk menangani filter
-        function applyFilter() {
-            const filterValue = document.querySelector('.select-filter').value;
-            alert('Filter diterapkan: ' + filterValue); // Ganti dengan logika filter yang sesuai
+    document.addEventListener('DOMContentLoaded', function () {
+        const mainFilter = document.getElementById('mainFilter');
+        const bulanFilter = document.getElementById('bulanFilter');
+    
+        function toggleBulanFilter() {
+            bulanFilter.style.display = mainFilter.value === 'bulan' ? 'inline-block' : 'none';
         }
+    
+        mainFilter.addEventListener('change', toggleBulanFilter);
+        toggleBulanFilter(); // jalankan di awal untuk kondisi reload halaman
+    });
+    
     </script>
+    
 
         <div class="container-fluid my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
@@ -48,13 +57,40 @@
 
         <!-- FORM PENCARIAN DAN FILTER -->
         <div class="pb-3 d-flex align-items-center">
-            <form class="d-flex me-3" action="" method="get">
-                <input class="form-control me-2" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Masukkan kata kunci" aria-label="Search">
-                <button class="btn btn-secondary" type="submit">Cari</button>
+            <form class="d-flex me-3" action="" method="get" id="searchForm">
+                <input class="form-control me-2" type="search" name="katakunci"
+                    value="{{ Request::get('katakunci') }}"
+                    placeholder="Search by Keyword" aria-label="Search" id="searchInput">
+                <button class="btn btn-secondary" type="submit">Search</button>
+            </form>
+            <form method="GET" action="" class="d-flex me-3" id="filterForm">
+                <select name="filter" id="mainFilter" class="select-filter me-2">
+                    <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All</option>
+                    <option value="bulan" {{ request('filter') == 'bulan' ? 'selected' : '' }}>Month</option>
+                    <option value="pelanggan" {{ request('filter') == 'pelanggan' ? 'selected' : '' }}>New Customers</option>
+                </select>
+
+                <select name="bulan" id="bulanFilter" class="select-filter me-2" style="display: none;">
+                    <option value="">Select Month</option>
+                    <option value="januari">January</option>
+                    <option value="februari">February</option>
+                    <option value="maret">March</option>
+                    <option value="april">April</option>
+                    <option value="mei">May</option>
+                    <option value="juni">June</option>
+                    <option value="juli">July</option>
+                    <option value="agustus">August</option>
+                    <option value="september">September</option>
+                    <option value="oktober">October</option>
+                    <option value="november">November</option>
+                    <option value="desember">December</option>
+                </select>
+
+                <button class="btn btn-outline-dark me-3" type="submit">Filter</button>
             </form>
             
             @if(auth()->user()->role == 'admin')
-                <a href="{{ route('non-datin.create') }}" class="btn btn-success">+ Tambah Data</a>
+                <a href="{{ route('non-datin.create') }}" class="btn btn-success">+ Create New</a>
             @endif
         </div>
 
@@ -76,6 +112,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if ($data->isEmpty())
+                        <tr>
+                            <td colspan="9" class="text-center">Data tidak ditemukan.</td>
+                        </tr>
+                    @else                    
                     <?php $i = $data->firstItem() ?>
                     <?php $lastCCA = null; ?>
                     @foreach($data as $items)
@@ -90,14 +131,15 @@
                                 <td>{{ $items->segment_non }}</td>
                                 <td>{{ $items->desc_newbill }}</td>
                                 <td>
-                                    <a href="{{ route('non-datin.assets.index', $items->cca) }}" class="btn btn-outline-dark btn-sm">Assets</a>
-                                    <a href="{{ route('non-datin.bill.index', $items->cca) }}" class="btn btn-outline-dark btn-sm">Bill</a>
+                                    <a href="{{ route('nonassets.show', ['cca' => $items->cca, 'filter' => request('filter'), 'bulan' => request('bulan')]) }}" class="btn btn-outline-dark btn-sm">Asset</a>
+                                    <a href="{{ route('nonbill.index', ['cca' => $items->cca, 'filter' => request('filter'), 'bulan' => request('bulan')]) }}" class="btn btn-outline-dark btn-sm">Bill</a>                                   
                                 </td>
+                            </tr>
                             <?php $lastCCA = $items->cca; ?>
                             <?php $i++ ?>
-                            </tr>
                          @endif
                     @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

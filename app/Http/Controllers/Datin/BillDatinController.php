@@ -172,6 +172,7 @@ class BillDatinController extends Controller
             ->where('tahun', $request->tahun)
             ->where('id', '!=', $bill->id) // Pastikan tahun yang sama tidak dihitung
             ->first();
+            
         if ($duplikat) {
             return redirect()->back()->with('error', 'Data untuk tahun ini sudah ada!')->withInput();
         }

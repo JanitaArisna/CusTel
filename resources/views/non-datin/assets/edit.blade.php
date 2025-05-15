@@ -1,11 +1,15 @@
 @extends('layouts.template')
+@include('komponen.pesan-nondatin')
 
 @section('konten')
 
     <!-- Konten form untuk edit data -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h3 class="mb-4">EDIT DATA PELANGGAN</h3>
-        <form id="updateForm" action="{{ route('non-datin.assets.update', ['cca' => $data->cca, 'snd' => $data->snd]) }}" method="POST">
+        <h3 class="mb-1">UPDATE DATA PELANGGAN</h3>
+        @if(isset($data) && $data->cca)
+            <p class="text-xs text-gray-400 mb-4">CCA Pelanggan: {{ $data->cca }}</p>
+        @endif
+        <form id="updateNonDatin" action="{{ route('nonassets.update', ['cca' => $data->cca, 'snd' => $data->snd]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -76,34 +80,31 @@
                 <label for="bundling" class="form-label">Bundling</label>
                 <select class="form-select" id="bundling" name="bundling" required>
                     <option disabled >Pilih Bundling</option>
-                    <option value="1P" {{ $data->produk =='1P' ? 'selected' : '' }}>1P</option>
-                    <option value="2P" {{ $data->produk == '2P' ? 'selected' : '' }}>2P</option>
-                    <option value="3P" {{ $data->produk == '3P' ? 'selected' : '' }}>3P</option>
+                    <option value="1P" {{ $data->bundling =='1P' ? 'selected' : '' }}>1P</option>
+                    <option value="2P" {{ $data->bundling == '2P' ? 'selected' : '' }}>2P</option>
+                    <option value="3P" {{ $data->bundling == '3P' ? 'selected' : '' }}>3P</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="manager" class="form-label">Accountn Manager</label>
                 <select class="form-select" id="manager" name="manager" required>
                     <option disabled>Pilih Account Manager</option>
-                    <option value="Oktorio Saragih" {{ $data->status == 'Oktorio Saragih' ? 'selected' : '' }}>Oktorio Saragih</option>
-                    <option value="Tiara Wulandari" {{ $data->status == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
-                    <option value="Ariesta Mirania Fabiola" {{ $data->status == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
-                    <option value="King Abdul Aziz" {{ $data->status == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
-                    <option value="Muhammad Rizky" {{ $data->status == 'Muhammad Rizky' ? 'selected' : '' }}>Muhammad Rizky</option>
-                    <option value="Ismael Marzuki" {{ $data->status == 'Ismael Marzuki' ? 'selected' : '' }}>Ismael Marzuki</option>
+                    <option value="Oktorio Saragih" {{ $data->manager == 'Oktorio Saragih' ? 'selected' : '' }}>Oktorio Saragih</option>
+                    <option value="Tiara Wulandari" {{ $data->manager == 'Tiara Wulandari' ? 'selected' : '' }}>Tiara Wulandari</option>
+                    <option value="Ariesta Mirania Fabiola" {{ $data->manager == 'Ariesta Mirania Fabiola' ? 'selected' : '' }}>Ariesta Mirania Fabiola</option>
+                    <option value="King Abdul Aziz" {{ $data->manager == 'King Abdul Aziz' ? 'selected' : '' }}>King Abdul Aziz</option>
+                    <option value="Muhammad Rizky" {{ $data->manager == 'Muhammad Rizky' ? 'selected' : '' }}>Muhammad Rizky</option>
+                    <option value="Ismael Marzuki" {{ $data->manager == 'Ismael Marzuki' ? 'selected' : '' }}>Ismael Marzuki</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="start_kontrak" class="form-label">Start Kontrak</label>
+                <label for="start" class="form-label">Date of Subscription</label>
                 <input type="date" class="form-control" id="start" value="{{ $data->start }}" name="start" required>
             </div>
-            <div class="mb-3">
-                <label for="end_kontrak" class="form-label">End Kontrak</label>
-                <input type="date" class="form-control" id="end" value="{{ $data->end }}" name="end" required>
-            </div>
             <!-- Button Save and Cancel -->
-            <button type="submit" class="btn btn-success" onclick="confirmUpdate()">Update</button>
-            <a href='{{ route('non-datin.assets.index', ['cca' => $data->cca]) }}' class="btn btn-danger">Cancel</a>
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="#" class="btn btn-danger btn-cancel-nondatin-edit">Cancel</a>
         </form>
     </div>
+    @include('komponen.pesan')
 @endsection

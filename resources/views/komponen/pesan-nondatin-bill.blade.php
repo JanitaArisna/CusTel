@@ -1,28 +1,28 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!--KHUSUS CREATE BILL DATIN-------------------------------->
+<!--KHUSUS CREATE BILL NON DATIN-------------------------------->
 @if(session('error'))
     <script>
         var pesanError = "{{ session('error') }}";
-        if (pesanError === 'duplicate_year') {
+        if (pesanError === 'nonduplicate_year') {
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal!',
                 text: 'Data untuk tahun ini sudah ada!',
             });
-        } else if (pesanError === 'no_month_no_year') {
+        } else if (pesanError === 'non_no_month_no_year') {
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal!',
                 text: 'Setidaknya satu bulan harus diisi, dan tahun harus diisi.',
             });
-        } else if (pesanError === 'no_month') {
+        } else if (pesanError === 'non_no_month') {
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal!',
                 text: 'Setidaknya satu bulan harus diisi.',
             });
-        } else if (pesanError === 'no_year') {
+        } else if (pesanError === 'non_no_year') {
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal!',
@@ -41,54 +41,54 @@
         });
     </script>
 @endif
-    <script>
-            // Kode JavaScript untuk konfirmasi sebelum membatalkan perubahan
-            document.addEventListener('DOMContentLoaded', function () {
-                const cancelBtn = document.querySelector('.btn-cancel-create');
-                const cancelUrl = "{{ route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid]) }}";
+<script>
+    // Kode JavaScript untuk konfirmasi sebelum membatalkan perubahan
+    document.addEventListener('DOMContentLoaded', function () {
+        const cancelBtn = document.querySelector('.btn-cancel-create');
+        const cancelUrl = "{{ route('nonbill.show', ['cca' => $cca, 'snd' => $snd]) }}";
 
-                cancelBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
+        cancelBtn.addEventListener('click', function (e) {
+            e.preventDefault();
 
-                    Swal.fire({
-                        title: 'Batalkan pembuatan?',
-                        text: "Data yang sudah diisi akan hilang.",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Ya, batalkan',
-                        cancelButtonText: 'Lanjutkan Pengisian'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = cancelUrl + '?info=creation_canceled'; // Tambahkan parameter error
-                        }
-                    });
-                });
-            });
-        </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        // Cek apakah ada parameter 'info' dengan nilai 'creation_canceled' di URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('info') === 'creation_canceled') {
             Swal.fire({
-                title: 'Pembatalan Berhasil',
-                text: 'Pembuatan data telah dibatalkan.',
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false,
+                title: 'Batalkan pembuatan?',
+                text: "Data yang sudah diisi akan hilang.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, batalkan',
+                cancelButtonText: 'Lanjutkan Pengisian'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = cancelUrl + '?info=creation_canceled'; // Tambahkan parameter error
+                }
             });
-
-            const url = new URL(window.location);
-            url.searchParams.delete('info'); // Hapus parameter 'info' dari URL
-            window.history.replaceState({}, document.title, url.pathname + url.search);
-
-        }
+        });
     });
-    </script>
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+// Cek apakah ada parameter 'info' dengan nilai 'creation_canceled' di URL
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('info') === 'creation_canceled') {
+    Swal.fire({
+        title: 'Pembatalan Berhasil',
+        text: 'Pembuatan data telah dibatalkan.',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+    });
 
-<!--AKHIR KHUSUS CREATE BILL DATIN--------------------------->
+    const url = new URL(window.location);
+    url.searchParams.delete('info'); // Hapus parameter 'info' dari URL
+    window.history.replaceState({}, document.title, url.pathname + url.search);
 
-<!--KHUSUS DELETE BILL DATIN-------------------------------->
+}
+});
+</script>
+
+<!--AKHIR KHUSUS CREATE BILL NON DATIN--------------------------->
+
+<!--KHUSUS DELETE BILL NON DATIN-------------------------------->
 @if(session('delete_success'))
     <script>
         Swal.fire({
@@ -124,9 +124,9 @@
         });
     });
 </script>
-<!--AKHIR KHUSUS DELETE BILL DATIN--------------------------->
+<!--AKHIR KHUSUS DELETE BILL NON DATIN--------------------------->
 
-<!--KHUSUS EDIT BILL DATIN---------------------------------->
+<!--KHUSUS EDIT BILL NON DATIN---------------------------------->
 @php
     $pesanSuccess = session('success') ?? request('success');
 @endphp
@@ -159,7 +159,7 @@
 @endif
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let updateForm = document.querySelector('#updateBill');
+            let updateForm = document.querySelector('#updateNonBill');
             if (updateForm) {
                 updateForm.addEventListener('submit', function (event) {
                     event.preventDefault(); // Mencegah submit form langsung
@@ -186,7 +186,7 @@
             // Kode JavaScript untuk konfirmasi sebelum membatalkan perubahan
             document.addEventListener('DOMContentLoaded', function () {
                 const cancelBtn = document.querySelector('.btn-cancel-edit');
-                const cancelUrl = "{{ route('bill.show', ['acc_num' => $acc_num, 'sid' => $sid]) }}";
+                const cancelUrl = "{{ route('nonbill.show', ['cca' => $cca, 'snd' => $snd]) }}";
 
                 cancelBtn.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -206,4 +206,4 @@
                 });
             });
         </script>
-<!--AKHIR KHUSUS EDIT BILL DATIN--------------------------->
+<!--AKHIR KHUSUS EDIT BILL NON DATIN--------------------------->

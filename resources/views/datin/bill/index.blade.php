@@ -42,14 +42,14 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-2">Acc Num</th>
-                        <th class="col-md-2">Cus Name</th>
-                        <th class="col-md-1">SID</th>
-                        <th class="col-md-1">Kontrak</th>
-                        <th class="col-md-1">Start</th>
-                        <th class="col-md-1">End</th>
-                        <th class="col-md-2">Account Manager</th>
-                        <th class="col-md-2">Aksi</th>
+                        <th class="col-md-*">Acc Num</th>
+                        <th class="col-md-*"">Cus Name</th>
+                        <th class="col-md-*">SID</th>
+                        <th class="col-md-*">Kontrak</th>
+                        <th class="col-md-*">Start</th>
+                        <th class="col-md-*">End</th>
+                        <th class="col-md-*">Account Manager</th>
+                        <th class="col-md-*"">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,8 +59,8 @@
                         <td>{{ $item->cust_nm }}</td>
                         <td>{{ $item->sid }}</td>
                         <td>{{ $item->kontrak }}</td>
-                        <td>{{ $item->start }}</td>
-                        <td>{{ $item->end }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->start)->translatedFormat('F jS, Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->end)->translatedFormat('F jS, Y') }}</td>
                         <td>{{ $item->am_nm }}</td>
                         <td>
                             <a href="{{ route('bill.show', ['acc_num' => $item->acc_num, 'sid' => $item->sid]) }}" class="btn btn-outline-info btn-sm">Show Bill</a>

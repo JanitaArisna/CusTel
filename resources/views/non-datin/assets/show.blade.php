@@ -1,5 +1,6 @@
 <x-app-layout>
     @extends('layouts.template')
+    @include('komponen.pesan-nondatin')
 
     <style>
         /* Tambahkan gaya CSS untuk tabel */
@@ -24,21 +25,10 @@
             margin: 2px; /* Margin untuk tombol kecil */
         }
     </style>
-
-    <script>
-        // Fungsi untuk konfirmasi penghapusan
-        function confirmDelete(sid) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById('delete-form-' + snd).submit();
-            }
-        }
-    </script>
-
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-1">ASSETS</h3>
-        <h2 class="text-xs text-gray-400 mb-1">Halaman ini berisi data Assets Non Datin</h2>
+        <h3 class="mb-1">ASSET</h3>
         <h2 class="text-xs text-gray-400 mb-4">CCA : {{ $cca }}</h2>
 
 
@@ -58,8 +48,7 @@
                         <th class="col-md-*">Produk</th>
                         <th class="col-md-*">Desc NewBill</th>
                         <th class="col-md-*">Bundling</th>
-                        <th class="col-md-*">Start</th>
-                        <th class="col-md-*">End</th>
+                        <th class="col-md-*">Date of Subscription</th>
                         <th class="col-md-*">Manager</th>
                         @if(auth()->user()->role == 'admin')
                             <th class="col-md-*">Aksi</th>
@@ -80,17 +69,16 @@
                         <td>{{ $items->produk }}</td>
                         <td>{{ $items->desc_newbill }}</td>
                         <td>{{ $items->bundling }}</td>
-                        <td>{{ $items->start }}</td>
-                        <td>{{ $items->end }}</td>
+                        <td>{{ \Carbon\Carbon::parse($items->start)->translatedFormat('F jS, Y') }}</td>
                         <td>{{ $items->manager }}</td>
 
                         @if(auth()->user()->role == 'admin')
                             <td>
-                                <a href="{{ route('non-datin.assets.edit', ['cca' => $items->cca, 'snd' => $items->snd]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form id="delete-form-{{ $items->snd }}" action="{{ route('non-datin.assets.destroy', ['cca' => $items->cca, 'snd' => $items->snd]) }}" method="POST" style="display: inline;">
+                                <a href="{{ route('nonassets.edit', ['cca' => $items->cca, 'snd' => $items->snd]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <form method="POST" action="{{ route('nonassets.destroy', ['cca' => $items->cca, 'snd' => $items->snd]) }}" class="form-delete d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="Button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ $items->snd }}')">Delete</button
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-delete">Delete</button>
                                 </form>
                             </td>
                         @endif

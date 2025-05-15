@@ -1,5 +1,6 @@
 <x-app-layout>
     @extends('layouts.template')
+    @include('komponen.pesan-nondatin-bill')
 
     <style>
         .table th, .table td {
@@ -19,23 +20,14 @@
             border: 1px solid #dee2e6;
         }
     </style>
-    <script>
-        // Fungsi untuk konfirmasi penghapusan
-        function confirmDelete(sid) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById('delete-form-' + snd).submit();
-            }
-        }
-    </script>
 
     <!-- START DATA -->
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <!-- TITLE -->
-        <h3 class="mb-1">TAMPILAN BILL</h3>
-        <h2 class="text-xs text-gray-400 mb-1">Halaman ini berisi data Tagihan Non Datin</h2>
-        <h2 class="text-xs text-gray-400 mb-3">CCA: {{ $cca }}  /  SND: {{$snd}}</h2>
+        <h3 class="mb-1">DETAIL BILLS</h3>
+        <h2 class="text-xs text-gray-400 mb-4">SND: {{$snd}}</h2>
         @if(auth()->user()->role == 'admin')
-            <a href="{{ route('non-datin.bill.create', ['cca' => $cca, 'snd' => $snd]) }}" class="btn btn-success">+ Tambah Bill</a><br><br>
+            <a href="{{ route('nonbill.create', ['cca' => $cca, 'snd' => $snd]) }}" class="btn btn-success">+ Tambah Bill</a><br><br>
         @endif
     
         <div style="overflow-x: auto;">
@@ -62,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $nonBill)
+                    @forelse ($data as $nonBill)
                     <tr>
                         <td>{{ $nonBill->snd }}</td>
                         <td>@rupiah($nonBill->januari)</td>
@@ -80,21 +72,25 @@
                         <td>{{$nonBill->tahun}}</td>
                         @if(auth()->user()->role == 'admin')
                             <td>
-                                <a href="{{ route('non-datin.bill.edit', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form id="delete-form-{{ $nonBill->snd }}" action="{{ route('non-datin.bill.destroy', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" method="POST" class="d-inline">
+                                <a href="{{ route('nonbill.edit', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <form method="POST" action="{{ route('nonbill.destroy', ['cca' => $cca, 'snd' => $snd, 'tahun' => $nonBill->tahun]) }}" class="form-delete d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="Button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ $nonBill->snd }}')">Delete</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-delete">Delete</button>
                                 </form>
                             </td>
-                        @endif
-                    </tr>
-                    @endforeach
+                            @endif
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="15" class="text-center text-muted">Bill untuk SND ini masih kosong</td>
+                        </tr>
+                        @endforelse
                 </tbody>
             </table>
         </div>
         <!-- Tombol Back -->
-        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '/non-datin'">Back</button>
+        <button type="button" class="btn btn-outline-primary mt-3" onclick="window.location.href = '{{ route('nonbill.index', ['cca' => $cca]) }}'">Back</button>
     </div>
     <!-- END DATA -->
 </x-app-layout>
